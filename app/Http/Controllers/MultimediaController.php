@@ -34,6 +34,11 @@ class MultimediaController extends Controller
      */
     public function store(Request $request)
     {
+        $multi = new Multimedia;
+        $multi->strRoute = $request->input('strRoute');
+        $multi->save();
+
+        return 'Saved';
         //
     }
 

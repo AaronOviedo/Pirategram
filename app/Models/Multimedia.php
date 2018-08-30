@@ -4,7 +4,7 @@ namespace Pirategram;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserModel extends Model
+class Multimedia extends Model
 {
-    //
+    
 }

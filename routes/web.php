@@ -23,3 +23,6 @@ Route::get('name/{name}', 'PruebaController@MyName');
     'Publication'   => 'PublicationController']);*/
 
 Route::resource('User', 'UserController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
