@@ -14,11 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/landing', function () {
-    return view('layouts.landing');
-});
-Route::get('Controller', 'PruebaController@index');
-Route::get('name/{name}', 'PruebaController@MyName');
 
 /*Route::resouce([
     'Multimedia'    => 'MultimediaController',

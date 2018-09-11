@@ -5,7 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/mine.js"></script>
+    
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -13,7 +19,7 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+                background-color: #f1f1f1;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
@@ -62,34 +68,106 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            #registroForm{
+                background-color: #e3e7fd;
+                margin-top: 5%;
+                margin-right: 15%;
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
+        <nav class="navbar navbar-light" style="background-color: #e3e7fd;">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <center>
+                    <ul class="navbar-nav pull-right">
+                        @guest
+                            <li class="nav-item btn pull-right" aria-label="Login">
+                                @if (Route::has('login'))
+                                    @auth
+                                        <a href="{{ url('/home') }}">Home</a>
+                                    @else
+                                        <!-- <a href="{{ route('login') }}">Login</a> -->
+                                        <button type="button" class="btn" data-toggle="modal" data-target="#loginModal">Login</button> 
+                                    @endauth
+                                @endif
+                            </li>
+                        @else
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                        @endguest
+                    </ul>
+                    </center>   
                 </div>
             </div>
+        </nav>
+
+        <!-- Modal Login -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="well" style="margin:5%; background-color: #e3e7fd;" id="loginForm">
+                        <center>
+                            <h1>Welcome</h1>
+                            <h3>Sign in</h3>
+                        </center>
+                        <form method="post" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                            <div class="form-group">
+                                <label for="correoElectronico" >Email</label>
+                                <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password</label>
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                            </div>
+                                <center>
+                                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">{{ __('Login') }}</button>
+                                </center>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome image -->
+        <div class="pull-left" style="margin-left:15%; margin-top:5%;">
+            <img src="../storage/app/public/start-image.png">
+        </div>
+
+        <!-- Sign up -->
+        <div class="well pull-right" id="registroForm">
+            <center><h1>Sign Up</h1></center>
+            <form method="post" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+                <div class="form-group">
+                    <label for="nombreUsuario" >Username</label>
+                    <input id="name" name="name" type="text" class="form-control" placeholder="Username" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="correoElectronico" >Email</label>
+                    <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contrasenia">Password</label>
+                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaNacimiento">Birthday</label>
+                    <input name="fechaNacimiento" type="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="genero">Sex</label>
+                    <select name="genero">
+                        <option value="1" selected="true">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Other</option>
+                    </select>
+                </div>
+                <center>
+                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="registrarse">Sign up</button>
+                </center>
+            </form>
         </div>
     </body>
 </html>

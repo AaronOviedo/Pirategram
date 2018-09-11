@@ -50,29 +50,27 @@
 </head>
 <body>
     <body>
-        <div id="warningMessage" class="bg-warning" style="max-width: 500px; margin: 20px auto -50px auto; padding: 10px 10px 10px 10px">
-			<button id="closeWarning" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		</div>
-        <div class="well" style="max-width: 500px; margin: 100px auto 10px;" id="loginForm">
-		<center>
-			<h1>Welcome</h1>
-			<h3>Sign in</h3>
-		</center>
-		<form method="post" action="login">
-			<div class="form-group">
-				<label for="correoElectronico" >Email</label>
-				<input id="correoElectronico" name="correoElectronico" type="email" class="form-control" placeholder="Email" required>
-			</div>
-			<div class="form-group">
-				<label for="pass">Password</label>
-				<input name="contrasenia" type="password" class="form-control" placeholder="Password" required>
-			</div>
-				<center>
-					<button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">Sign in</button>
-					<button type="button" class="btn btn-info" style="margin-top:10px;" align="center" id="mostrarRegistro">Sign up</button>
-				</center>
-		</form>
-	</div>
+
+    <div class="well" style="max-width: 500px; margin: 100px auto 10px;" id="loginForm">
+        <center>
+            <h1>Welcome</h1>
+            <h3>Sign in</h3>
+        </center>
+        <form method="post" action="login">
+            <div class="form-group">
+                <label for="correoElectronico" >Email</label>
+                <input id="correoElectronico" name="correoElectronico" type="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="pass">Password</label>
+                <input name="contrasenia" type="password" class="form-control" placeholder="Password" required>
+            </div>
+                <center>
+                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">Sign in</button>
+                    <button type="button" class="btn btn-info" style="margin-top:10px;" align="center" id="mostrarRegistro">Sign up</button>
+                </center>
+        </form>
+    </div>
 
     <!-- Registro a llevar en el inicio de sesion -->
 	<div class="well" style="max-width: 500px; margin: 100px auto 10px; display: none" id="registroForm">

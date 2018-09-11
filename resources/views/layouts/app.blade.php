@@ -11,41 +11,32 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/mine.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-light" style="background-color: #e3e7fd;">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav pull-right">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#loginModal">Login</button>
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -70,6 +61,32 @@
                 </div>
             </div>
         </nav>
+
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="well" style="margin:5%; background-color: #e3e7fd;" id="loginForm">
+                        <center>
+                            <h1>Welcome</h1>
+                            <h3>Sign in</h3>
+                        </center>
+                        <form method="post" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                            <div class="form-group">
+                                <label for="correoElectronico" >Email</label>
+                                <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password</label>
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                            </div>
+                                <center>
+                                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">{{ __('Login') }}</button>
+                                </center>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <main class="py-4">
             @yield('content')
