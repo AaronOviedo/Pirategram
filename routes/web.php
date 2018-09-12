@@ -20,7 +20,9 @@ Route::get('/', function () {
     'User'          => 'UserController',
     'Publication'   => 'PublicationController']);*/
 
-Route::resource('User', 'UserController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/newPost', 'PublicationController@index');
+Route::get('/profile', 'ProfileController@index');
+Route::get('/search', 'SearchController@index');

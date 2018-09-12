@@ -93,7 +93,7 @@
                                         <a href="{{ url('/home') }}">Home</a>
                                     @else
                                         <!-- <a href="{{ route('login') }}">Login</a> -->
-                                        <button type="button" class="btn" data-toggle="modal" data-target="#loginModal">Login</button> 
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button> 
                                     @endauth
                                 @endif
                             </li>
@@ -124,9 +124,9 @@
                                 <label for="pass">Password</label>
                                 <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
                             </div>
-                                <center>
-                                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">{{ __('Login') }}</button>
-                                </center>
+                            <center>
+                                <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">{{ __('Login') }}</button>
+                            </center>
                         </form>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
 
         <!-- Welcome image -->
         <div class="pull-left" style="margin-left:15%; margin-top:5%;">
-            <img src="../storage/app/public/start-image.png">
+            <img src="https://monash.it/files/news/workinprogressheader.png" width="640" height="346" style="opacity:.5">
         </div>
 
         <!-- Sign up -->

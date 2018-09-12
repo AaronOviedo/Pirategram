@@ -4,7 +4,7 @@ namespace Pirategram\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MultimediaController extends Controller
+class SearchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class MultimediaController extends Controller
      */
     public function index()
     {
-        //
+        return view('search');
     }
 
     /**
@@ -34,11 +34,6 @@ class MultimediaController extends Controller
      */
     public function store(Request $request)
     {
-        $multi = new Multimedia;
-        $multi->strRoute = $request->input('strRoute');
-        $multi->save();
-
-        return 'Saved';
         //
     }
 

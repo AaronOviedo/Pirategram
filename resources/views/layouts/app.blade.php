@@ -82,12 +82,35 @@
                     {{ config('app.name', 'Laravel') }}
                 </a>
 
+                <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <img src="https://www.eldiario.es/static/EDIDiario/images/facebook-default-photo.jpg" style="height:50px; width:50px;;">
+                    </div>
+    
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                        <li class="active"><a href="{{url('/profile')}}">Username<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="newPost">New post</a></li>
+                        </ul>
+                        <form class="navbar-form navbar-left" role="search" action="search" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="textoBusqueda" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Search</button>
+                        </form>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav pull-right">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item pull-right">
-                                <button type="button" class="btn" data-toggle="modal" data-target="#loginModal">Login</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
                             </li>
                         @else
                             <li class="nav-item dropdown">
