@@ -79,7 +79,7 @@
     <body>
         <nav class="navbar navbar-light" style="background-color: #e3e7fd;">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 
@@ -141,7 +141,7 @@
         <!-- Sign up -->
         <div class="well pull-right" id="registroForm">
             <center><h1>Sign Up</h1></center>
-            <form method="post" action="{{ url('/home') }}" aria-label="{{ __('Register') }}">
+            <form method="post" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
                 <div class="form-group">
                     <label for="nombreUsuario" >Username</label>
                     <input id="name" name="name" type="text" class="form-control" placeholder="Username" required title="Complete this field" autofocus>
@@ -167,7 +167,7 @@
                     </select>
                 </div>
                 <center>
-                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="registrarse">Sign up</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="registrarse">{{ __('Register') }}</button>
                 </center>
             </form>
         </div>
