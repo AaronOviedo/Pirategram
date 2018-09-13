@@ -141,22 +141,22 @@
         <!-- Sign up -->
         <div class="well pull-right" id="registroForm">
             <center><h1>Sign Up</h1></center>
-            <form method="post" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+            <form method="post" action="{{ url('/home') }}" aria-label="{{ __('Register') }}">
                 <div class="form-group">
                     <label for="nombreUsuario" >Username</label>
-                    <input id="name" name="name" type="text" class="form-control" placeholder="Username" required autofocus>
+                    <input id="name" name="name" type="text" class="form-control" placeholder="Username" required title="Complete this field" autofocus>
                 </div>
                 <div class="form-group">
                     <label for="correoElectronico" >Email</label>
-                    <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                    <input id="email" name="email" type="email" class="form-control" placeholder="Email" required title="Complete this field">
                 </div>
                 <div class="form-group">
                     <label for="contrasenia">Password</label>
-                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required title="Complete this field">
                 </div>
                 <div class="form-group">
                     <label for="fechaNacimiento">Birthday</label>
-                    <input name="fechaNacimiento" type="date" class="form-control" required>
+                    <input name="fechaNacimiento" type="date" class="form-control" required title="Complete this field">
                 </div>
                 <div class="form-group">
                     <label for="genero">Sex</label>

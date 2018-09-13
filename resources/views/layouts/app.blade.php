@@ -100,7 +100,7 @@
                         </ul>
                         <form class="navbar-form navbar-left" role="search" action="search" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="textoBusqueda" placeholder="Search">
+                                <input type="text" class="form-control" name="textoBusqueda" placeholder="Search" required title='This field is required'>
                             </div>
                             <button type="submit" class="btn btn-default">Search</button>
                         </form>
