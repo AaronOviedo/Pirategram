@@ -4,7 +4,7 @@
     <div class="container">
         <div class="well" style="width: 70%; margin: 40px auto;" >
             <h3>Users found:</h3> <br>
-                <h3>Ningún usuario coincide con la búsqueda</h3>
+                <h3>No users found.</h3>
                 <div class="well" style="width: 350px;">
                     <img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" 
                         src="https://www.eldiario.es/static/EDIDiario/images/facebook-default-photo.jpg">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="well" style="width: 70%; margin: 40px auto;" >
-            <h3>No hay publicaciones que coincidad con la búsqueda</h3>
+            <h3>No post found.</h3>
         </div>
         <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
             <div>
