@@ -4,10 +4,12 @@ namespace Pirategram;
 
 use Illuminate\Database\Eloquent\Model;
 
-class myUser extends Eloquent
+class myUser extends Model
 {
     protected $fillable = ['strName', 'strEmail', 'strPassword', 'dateBirth', 
                                 'strGender', 'strUserDescription', 'intCover', 'intProfile'];
+
+    protected $dates = ['dateBirth'];
 
     protected $table = 'catUser';
     

@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\myUser;
-use App\Post;
-use App\Multimedia;
+use Pirategram\myUser;
+use Pirategram\Post;
+use Pirategram\Multimedia;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,17 +20,18 @@ class DatabaseSeeder extends Seeder
         $default_cover->save();
 
         $default_profile = new Multimedia();
-        $default_profile->strLink = 'https://www.eldiario.es/static/EDIDiario/images/facebook-default-photo.jpg';
+        $default_profile->strLink = "https://www.eldiario.es/static/EDIDiario/images/facebook-default-photo.jpg";
         $default_profile->save();
 
         Multimedia::create([
-            'strLink' =>    'http://tierraaltatuito.com/wp-content/uploads/2017/11/WERE-WORKING.jpg'
+            "strLink" =>    'http://tierraaltatuito.com/wp-content/uploads/2017/11/WERE-WORKING.jpg'
         ]);
 
         myUser::create([
             'strName'               =>  'Aaron Oviedo',
             'strEmail'              =>  'aaron.t.o@hotmail.com',
             'strPassword'           =>  'luisaron97',
+            'dateBirth'             =>  '1997-07-15 00:00:00',
             'strGender'             =>  'male',
             'strUserDescription'    =>  'Default user',
             'intProfile'            =>  1,

@@ -4,7 +4,7 @@ namespace Pirategram;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Eloquent
+class Post extends Model
 {
     protected $table = 'catPost';
 
