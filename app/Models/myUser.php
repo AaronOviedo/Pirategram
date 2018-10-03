@@ -12,11 +12,27 @@ class myUser extends Eloquent
     protected $table = 'catUser';
     
     public function cover(){
-        return $this->hasOne('catMultimedia');
+        return $this->hasOne('Multimedia');
     }
 
     public function profile(){
-        return $this->hasOne('catMultimedia');
+        return $this->hasOne('Multimedia');
+    }
+
+    public function coment(){
+        return $this->hasMany('Coment');
+    }
+
+    public function post(){
+        return $this->hasMany('Post');
+    }
+
+    public function pvtMsg(){
+        return $this->belongsToMany('myUser', 'relPvtMsg', 'intReceiveID', 'intSendID');
+    }
+
+    public function follow(){
+        return $this->belongsToMany('myUser', 'relFollow', 'intFollowedID', 'intFollowerID');
     }
 
 }

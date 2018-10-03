@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePvtMsgTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreatePvtMsgTable extends Migration
      */
     public function up()
     {
-        Schema::create('relPvtMsg', function (Blueprint $table) {
+        Schema::create('catPost', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('intReceive');  //User who receive the private message
-            $table->integer('intSend');     //User who send the private message
+            $table->string('strTitle');
+            $table->string('strDescription');
+            $table->integer('intLikes');
+            $table->integer('intUserID');
+            $table->integer('intMultimediaID');
 
             $table->timestamps();
         });
@@ -30,6 +33,6 @@ class CreatePvtMsgTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relPvtMsg');
+        Schema::dropIfExists('catPost');
     }
 }

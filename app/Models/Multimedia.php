@@ -10,10 +10,14 @@ class Multimedia extends Model
     protected $table = 'catMultimedia';
 
     public function cover(){
-        return $this->belongsTo('catUser');
+        return $this->belongsTo('myUser');
     }
     
     public function profile(){
-        return $this->belongsTo('catUser');
+        return $this->belongsTo('myUser');
+    }
+
+    public function post(){
+        return $this->belongsTo('Post');
     }
 }

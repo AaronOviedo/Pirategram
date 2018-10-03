@@ -13,7 +13,7 @@ class CreateFollowTable extends Migration
      */
     public function up()
     {
-        Schema::create('follow', function (Blueprint $table) {
+        Schema::create('relFollow', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('intFollowed'); //User who has been followed
@@ -30,6 +30,6 @@ class CreateFollowTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('follow');
+        Schema::dropIfExists('relFollow');
     }
 }
