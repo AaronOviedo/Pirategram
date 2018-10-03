@@ -14,15 +14,17 @@ class CreateMyUsersTable extends Migration
     public function up()
     {
         Schema::create('catUser', function (Blueprint $table) {
-            $table->increments('intUserID');
+            $table->increments('id');
+            
             $table->string('strName');
             $table->string('strEmail')->unique();
             $table->string('strPassword');
-            $table->datetime('dateBirth');
+            $table->timestamp('dateBirth');
             $table->string('strGender');
             $table->string('strUserDescription');
-            $table->string('strRouteProfile');
-            $table->string('strRouteCover');            
+            $table->integer('intProfile');
+            $table->integer('intCover');        
+                
             $table->rememberToken();
             $table->timestamps();
         });

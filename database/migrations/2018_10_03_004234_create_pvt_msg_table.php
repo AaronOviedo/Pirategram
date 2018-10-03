@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMultimediaTable extends Migration
+class CreatePvtMsgTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateMultimediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('catMultimedia', function (Blueprint $table) {
+        Schema::create('pvtMsg', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('strRoute');
+            $table->integer('intReceive');  //User who receive the private message
+            $table->integer('intSend');     //User who send the private message
 
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ class CreateMultimediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('catMultimedia');
+        Schema::dropIfExists('pvtMsg');
     }
 }

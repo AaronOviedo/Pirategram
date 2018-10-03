@@ -3,6 +3,7 @@
 namespace Pirategram\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\myUser;
 
 class ProfileController extends Controller
 {
