@@ -4,7 +4,7 @@ namespace Pirategram;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Coment extends Model
+class Coment extends Eloquent
 {
     protected $table = 'catComent';
 
