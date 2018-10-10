@@ -3,6 +3,7 @@
 namespace Pirategram\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Pirategram\Post;
 
 class PublicationController extends Controller
 {
@@ -13,7 +14,7 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        return view('newPost');
+        //return view('newPost');
     }
 
     /**
@@ -34,7 +35,21 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $json = json_decode($request->varJSON);
+
+        if($json != null){
+            $postTitle = $json['title'];
+            $postContent = $json['content'];
+            $userID = $json['id'];
+            
+            $newPost = Post::create([
+                'strTitle'          =>  $postTitle,
+                'strContent'        =>  $postContent,
+                'intLikes'          =>  0,
+                'intUserID'         =>  $userID,
+                'intMultimedia'     =>  2
+            ]);
+        }
     }
 
     /**

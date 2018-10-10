@@ -163,4 +163,17 @@ $(document).ready(function(){
 
         ajaxPost(formAction, varJSON, false);
     });*/
+
+    $("#formNewPost").submit(function(e){
+        e.preventDefault();
+        var formAction = $(this).attr("action");
+
+        var postTitle = $('#postTitleID').val();
+        var postContent = $('#postContentID').val();
+        var userID = $('userID').val();
+
+        var varJSON = JSON.stringify({title:postTitle, content:postContent, id:userID});
+
+        ajaxPost(formAction, varJSON, true);
+    });
 });

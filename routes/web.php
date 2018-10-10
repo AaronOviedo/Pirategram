@@ -18,5 +18,5 @@ Route::get('/', function () {
 Route::resource('myUser', 'myUserController');
 Route::resource('home', 'HomeController');
 Route::resource('newPost', 'PublicationController');
-Route::resource('profie', 'ProfileController');
+Route::resource('profile', 'ProfileController');
 Route::resource('search', 'SearchController');

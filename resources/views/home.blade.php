@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    session_start();
+    $user = Pirategram\myUser::where('id', '=', $_SESSION['userID'])->first();
+@endphp
 <div class="container">
     <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
         <div>
@@ -37,16 +41,14 @@
                     <h4 class="modal-title" id="myModalLabel">Comments</h4>
                     <div class="modal-body">
                         <form method="post" action="comment" >                
-                            <input type="hidden" name="idUsuario" value="intUserID">
+                            <input type="hidden" name="idUsuario" value="{{$user->id}}">
                             <input type="hidden" name="idPublicacion" id="idPublicacionHidden">
-                            <input type="hidden" name="action" value="createComment">
-                            <input type="hidden" name="place" value="home">
                             <div class="form-group">
                                 <label for="contenidoComentario" style="display: block;">Comment: </label>
-                                <textarea style="width: 100%; height: 50px; border-radius: 5px;" id="contenidoComentario" name="contenidoComentario" placeholder="New comment..." required></textarea>
+                                <textarea style="width: 100%; height: 50px; border-radius: 5px;" id="contentComment" name="contenidoComentario" placeholder="New comment..." required></textarea>
                             </div>
                             <center>
-                                <button type="submit" class="btn btn-primary" style="margin-top:0px;" align="center" id="publicarComentario">Post comment</button>
+                                <button type="submit" class="btn btn-primary" style="margin-top:0px;" align="center">Post comment</button>
                             </center>
                         </form>
                     </div>

@@ -81,7 +81,7 @@
     <body>
         <nav class="navbar navbar-light" style="background-color: #e3e7fd;">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 

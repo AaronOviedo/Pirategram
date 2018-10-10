@@ -1,3 +1,7 @@
+@php
+    use Pirategram\Multimedia;
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -82,6 +86,15 @@
                     {{ config('app.name', 'Laravel') }}
                 </a>
 
+                @php
+                    $user = Pirategram\myUser::where('id', '=', $_SESSION['userID'])->first();
+                    $photo = Pirategram\Multimedia::where('id', '=', $user->intProfile)->first();
+                    //dd($userPhoto->intProfile);
+                    if($photo != null){
+                        $link = $photo->strLink;
+                    }
+                @endphp
+
                 <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
@@ -89,16 +102,16 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <img src="https://www.eldiario.es/static/EDIDiario/images/facebook-default-photo.jpg" style="height:50px; width:50px;;">
+                        <img src="{{$link}}" style="height:50px; width:50px;;">
                     </div>
     
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="{{url('/profile')}}">Username<span class="sr-only">(current)</span></a></li>
-                            <li class="active"><a href="newPost">New post</a></li>
+                            <li class="active"><a href="{{url('/profile')}}">{{$user->strName}}<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#newPostModal" data-toggle="modal" data-target="#newPostModal">New Post</a></li>
                         </ul>
-                        <form class="navbar-form navbar-left" role="search" action="search" method="post">
+                        <form class="navbar-form navbar-left" role="search" action="search" method="get">
                             <div class="form-group">
                                 <input type="text" class="form-control" name="textoBusqueda" placeholder="Search" required title='This field is required'>
                             </div>
@@ -133,6 +146,38 @@
                                 <center>
                                     <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">{{ __('Login') }}</button>
                                 </center>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="well" style="margin:5%; background-color: #e3e7fd;" id="newPostForm">
+                        <center>
+                            <h1>New Post</h1>
+                        </center>
+                        <form id="formNewPost" method="post" action="/newPost" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="userID" value="{{$user->id}}">
+                                <div class="form-group">
+                                    <label for="tituloPublicacion" >Post title</label>
+                                    <input id="postTitleID" name="postTitle" type="text" class="form-control" placeholder="Título" required>
+                                </div>
+                        <div class="form-group">
+                            <label for="contenidoPublicacion" style="display: block;">Post content</label>
+                            <p>(if you gonna use '#', take a space between them)</p>
+                            <textarea style="width: 100%; height: 100px; border-radius: 5px;" id="postContentID" name="postContent" placeholder="Content..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="imagenPublicacion">Image</label>
+                            <input type="file" id="postImageID" name="postImage" class="form-control">
+                        </div>
+                        <center>
+                            <button type="submit" class="btn btn-primary" style="margin-top:10px;">Post</button>
+                        </center>
                         </form>
                     </div>
                 </div>

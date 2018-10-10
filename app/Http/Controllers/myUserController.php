@@ -15,15 +15,21 @@ class myUserController extends Controller
      */
     public function index()
     {
-        $strEmail = Input::get('emailID');
-        $strPassword = Input::get('passwordID');
-        $loginUser = myUser::where('strEmail', '=', $strEmail, 'and', 'strPassword', '=', $strPassword)->first();
+        $strEmail = Input::get('email');
+        $strPassword = Input::get('password');
+        
+        $loginUser = myUser::where('strEmail', '=', $strEmail)->where('strPassword', '=', $strPassword)->first();
 
-        session_start();
+        if($loginUser != null){
+            session_start();
 
-        $_SESSION["userID"] = $loginUser->id;
-
-        return redirect()->route('home');
+            $userID = $loginUser->id;
+            $_SESSION["userID"] = $userID;
+    
+            return redirect('home');
+        }else{
+            return redirect('/');
+        }
     }
 
     /**
