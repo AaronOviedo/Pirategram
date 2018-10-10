@@ -108,29 +108,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav pull-right">
                         <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item pull-right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
                     </ul>
                 </div>
             </div>
@@ -144,7 +121,7 @@
                             <h1>Welcome</h1>
                             <h3>Sign in</h3>
                         </center>
-                        <form method="post" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                        <form method="post" action="">
                             <div class="form-group">
                                 <label for="correoElectronico" >Email</label>
                                 <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>

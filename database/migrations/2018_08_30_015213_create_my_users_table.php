@@ -21,7 +21,6 @@ class CreateMyUsersTable extends Migration
             $table->string('strPassword');
             $table->timestamp('dateBirth', 0);
             $table->string('strGender');
-            $table->string('strUserDescription');
             $table->integer('intProfile');
             $table->integer('intCover');        
                 

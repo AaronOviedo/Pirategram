@@ -5,6 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <meta name="csrf-token" content="{{{ csrf_token() }}}">
+
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/mine.js"></script>
@@ -86,20 +88,9 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <center>
                     <ul class="navbar-nav pull-right">
-                        @guest
-                            <li class="nav-item btn pull-right" aria-label="Login">
-                                @if (Route::has('login'))
-                                    @auth
-                                        <a href="{{ url('/home') }}">Home</a>
-                                    @else
-                                        <!-- <a href="{{ route('login') }}">Login</a> -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button> 
-                                    @endauth
-                                @endif
-                            </li>
-                        @else
-
-                        @endguest
+                        <li class="nav-item btn pull-right" aria-label="Login">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button> 
+                        </li>
                     </ul>
                     </center>   
                 </div>
@@ -115,17 +106,17 @@
                             <h1>Welcome</h1>
                             <h3>Sign in</h3>
                         </center>
-                        <form method="post" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                        <form method="get" action="/myUser">
                             <div class="form-group">
                                 <label for="correoElectronico" >Email</label>
-                                <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                                <input id="emailID" name="email" type="email" class="form-control" placeholder="Email" required>
                             </div>
                             <div class="form-group">
                                 <label for="pass">Password</label>
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                                <input id="passwordID" name="password" type="password" class="form-control" placeholder="Password" required>
                             </div>
                             <center>
-                                <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">{{ __('Login') }}</button>
+                                <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">Login</button>
                             </center>
                         </form>
                     </div>
@@ -141,33 +132,34 @@
         <!-- Sign up -->
         <div class="well pull-right" id="registroForm">
             <center><h1>Sign Up</h1></center>
-            <form method="post" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+            <form method="post" action="/myUser" id="formRegister">
+                {{ csrf_field() }}
                 <div class="form-group">
                     <label for="nombreUsuario" >Username</label>
-                    <input id="name" name="name" type="text" class="form-control" placeholder="Username" required title="Complete this field" autofocus>
+                    <input id="nameID" name="name" type="text" class="form-control" placeholder="Username" required title="Complete this field" autofocus>
                 </div>
                 <div class="form-group">
                     <label for="correoElectronico" >Email</label>
-                    <input id="email" name="email" type="email" class="form-control" placeholder="Email" required title="Complete this field">
+                    <input id="emailID" name="email" type="email" class="form-control" placeholder="Email" required title="Complete this field">
                 </div>
                 <div class="form-group">
                     <label for="contrasenia">Password</label>
-                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required title="Complete this field">
+                    <input id="passwordID" name="password" type="password" class="form-control" placeholder="Password" required title="Complete this field">
                 </div>
                 <div class="form-group">
                     <label for="fechaNacimiento">Birthday</label>
-                    <input name="fechaNacimiento" type="date" class="form-control" required title="Complete this field">
+                    <input id="dateID" name="date" type="date" class="form-control" required title="Complete this field">
                 </div>
                 <div class="form-group">
                     <label for="genero">Sex</label>
-                    <select name="genero">
+                    <select name="gender" id="genderID">
                         <option value="1" selected="true">Male</option>
                         <option value="2">Female</option>
                         <option value="3">Other</option>
                     </select>
                 </div>
                 <center>
-                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="registrarse">{{ __('Register') }}</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center">Register</button>
                 </center>
             </form>
         </div>

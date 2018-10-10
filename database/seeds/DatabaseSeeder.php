@@ -33,7 +33,6 @@ class DatabaseSeeder extends Seeder
             'strPassword'           =>  'luisaron97',
             'dateBirth'             =>  '1997-07-15 00:00:00',
             'strGender'             =>  'male',
-            'strUserDescription'    =>  'Default user',
             'intProfile'            =>  1,
             'intCover'              =>  0
         ]);

@@ -12,17 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return View("welcome");
 });
 
-/*Route::resouce([
-    'Multimedia'    => 'MultimediaController',
-    'User'          => 'UserController',
-    'Publication'   => 'PublicationController']);*/
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/newPost', 'PublicationController@index');
-Route::get('/profile', 'ProfileController@index');
-Route::get('/search', 'SearchController@index');
+Route::resource('myUser', 'myUserController');
+Route::resource('home', 'HomeController');
+Route::resource('newPost', 'PublicationController');
+Route::resource('profie', 'ProfileController');
+Route::resource('search', 'SearchController');

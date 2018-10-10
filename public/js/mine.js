@@ -5,6 +5,23 @@
  */
 
 $(document).ready(function(){
+
+    function ajaxPost(url, varJSON, sync){
+        var xhttp;
+        xhttp = new XMLHttpRequest();
+
+        var metas = document.getElementsByTagName('meta'); 
+
+        xhttp.open("POST", url, sync);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        for (i=0; i<metas.length; i++) { 
+            if (metas[i].getAttribute("name") == "csrf-token") {  
+                xhttp.setRequestHeader("X-CSRF-Token", metas[i].getAttribute("content"));
+            } 
+        }
+        xhttp.send(varJSON);
+    }
+
     $(".follow").click(function(){
         var button = $(this);
         var action = button.data("action");
@@ -128,45 +145,22 @@ $(document).ready(function(){
         var src = img.attr("src");
         $("#imgModalGallery").attr("src", src);
     });
-    
-    $("#nombreUsuarioRegistro").blur(function(){
-        var textBox = $(this);
-        var nombreUsuario = textBox.val();
-        $.ajax({
-			url : 'check',
-			data : {
-                            nombreUsuario : nombreUsuario,
-                            action : "checkUserName"
-			},
-			success : function(responseText) {
-				if(responseText == "<p>1</p>"){
-                                    textBox.css("border-color", "#ff0000");
-                                    alert("Lo sentimos, ese nombre de usuario ya está en uso")
-                                }else{
-                                    textBox.css("border-color", "#00ff00");
-                                }
-			}
-		});
-    });
-    
-    $("#correoElectronicoRegistro").blur(function(){
-        var textBox = $(this);
-        var correoElectronico = textBox.val();
-        $.ajax({
-			url : 'check',
-			data : {
-                            correoElectronico : correoElectronico,
-                            action : "checkEmail"
-			},
-			success : function(responseText) {
-				if(responseText == "<p>1</p>"){
-                                    textBox.css("border-color", "#ff0000");
-                                    alert("Lo sentimos, ese correo ya está en uso")
-                                }else{
-                                    textBox.css("border-color", "#00ff00");
-                                }
-			}
-		});
-    });
-    
+
+    /*$("#formRegister").submit(function(event){
+        event.preventDefault();
+
+        var formAction = $(this).attr("action");
+
+        var vName = $("#nameID").val();
+        var vEmail = $("#emailID").val();
+        var vPassword = $("#passwordID").val();
+        var vDate = $("#dateID").val();
+        var vGender = $("#genderID").val();
+
+        var varJSON = JSON.stringify({name:vName, email:vEmail, password:vPassword, date:vDate, gender:vGender});
+
+        console.log(varJSON);
+
+        ajaxPost(formAction, varJSON, false);
+    });*/
 });

@@ -21,12 +21,7 @@
         border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
             <div style="display: inline-block;">
                 <h3>Username</h3>
-                <h5>Country</h5>
                 <h5>Gender</h5>
-            </div>
-            <div style="display: inline-block; vertical-align: top; margin-top: 20px; margin-left: 3%;">
-                <p>About me: </p>
-                <h4>"User description"</h4>
             </div>
         </div>
         <div style="margin: 30px auto; width: 50%;">
