@@ -9,14 +9,14 @@ class Multimedia extends Model
     protected $table = 'catMultimedia';
 
     public function cover(){
-        return $this->belongsTo('myUser');
+        return $this->hasOne('myUser');
     }
     
     public function profile(){
-        return $this->belongsTo('myUser');
+        return $this->hasOne('myUser');
     }
 
     public function post(){
-        return $this->belongsTo('Post');
+        return $this->hasMany('Pirategram\Post');
     }
 }

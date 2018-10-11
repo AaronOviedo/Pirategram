@@ -1,7 +1,3 @@
-@php
-    use Pirategram\Multimedia;
-@endphp
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -126,32 +122,6 @@
             </div>
         </nav>
 
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="well" style="margin:5%; background-color: #e3e7fd;" id="loginForm">
-                        <center>
-                            <h1>Welcome</h1>
-                            <h3>Sign in</h3>
-                        </center>
-                        <form method="post" action="">
-                            <div class="form-group">
-                                <label for="correoElectronico" >Email</label>
-                                <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="pass">Password</label>
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
-                            </div>
-                                <center>
-                                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">{{ __('Login') }}</button>
-                                </center>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -159,9 +129,9 @@
                         <center>
                             <h1>New Post</h1>
                         </center>
-                        <form id="formNewPost" method="post" action="/newPost" enctype="multipart/form-data">
+                        <form id="formNewPost" method="post" action="/newPost">
                             {{ csrf_field() }}
-                            <input type="hidden" name="userID" value="{{$user->id}}">
+                            <input id="userID" type="hidden" name="userID" value="{{$user->id}}">
                                 <div class="form-group">
                                     <label for="tituloPublicacion" >Post title</label>
                                     <input id="postTitleID" name="postTitle" type="text" class="form-control" placeholder="Título" required>
@@ -171,10 +141,12 @@
                             <p>(if you gonna use '#', take a space between them)</p>
                             <textarea style="width: 100%; height: 100px; border-radius: 5px;" id="postContentID" name="postContent" placeholder="Content..." required></textarea>
                         </div>
+                        <!--
                         <div class="form-group">
                             <label for="imagenPublicacion">Image</label>
                             <input type="file" id="postImageID" name="postImage" class="form-control">
                         </div>
+                        -->
                         <center>
                             <button type="submit" class="btn btn-primary" style="margin-top:10px;">Post</button>
                         </center>

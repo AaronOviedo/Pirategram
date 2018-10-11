@@ -3,20 +3,21 @@
 namespace Pirategram;
 
 use Illuminate\Database\Eloquent\Model;
+use Pirategram\Multimedia;
 
 class Post extends Model
 {
     protected $table = 'catPost';
 
     public function multimedia(){
-        return $this->hasMany('Multimedia');
+        return $this->belongsTo('Pirategram\Multimedia');
     }
 
     public function coment(){
-        return $this->belongsTo('Coment');
+        return $this->belongsTo('Pirategram\Coment');
     }
 
     public function user(){
-        return $this->hasMany('User');
+        return $this->belongsTo('Pirategram\myUser');
     }
 }

@@ -14,11 +14,11 @@ class myUser extends Model
     protected $table = 'catUser';
     
     public function cover(){
-        return $this->hasOne('Multimedia');
+        return $this->belongsTo('Multimedia');
     }
 
     public function profile(){
-        return $this->hasOne('Multimedia');
+        return $this->belongsTo('Multimedia');
     }
 
     public function coment(){

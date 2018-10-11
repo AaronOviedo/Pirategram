@@ -35,21 +35,15 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        $json = json_decode($request->varJSON);
+        $newPost = Post::create([
+            'strTitle'          =>  $request->title,
+            'strContent'        =>  $request->content,
+            'intLikes'          =>  0,
+            'intUserID'         =>  $request->id,
+            'intMultimedia'     =>  3
+        ]);
 
-        if($json != null){
-            $postTitle = $json['title'];
-            $postContent = $json['content'];
-            $userID = $json['id'];
-            
-            $newPost = Post::create([
-                'strTitle'          =>  $postTitle,
-                'strContent'        =>  $postContent,
-                'intLikes'          =>  0,
-                'intUserID'         =>  $userID,
-                'intMultimedia'     =>  2
-            ]);
-        }
+        return response()->json($newPost);
     }
 
     /**

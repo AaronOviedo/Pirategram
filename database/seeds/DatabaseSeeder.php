@@ -33,16 +33,16 @@ class DatabaseSeeder extends Seeder
             'strPassword'           =>  'luisaron97',
             'dateBirth'             =>  '1997-07-15 00:00:00',
             'strGender'             =>  'male',
-            'intProfile'            =>  1,
-            'intCover'              =>  0
+            'intProfile'            =>  2,
+            'intCover'              =>  1
         ]);
         
         Post::create([
             'strTitle'          =>  'Default post',
             'strDescription'    =>  'This is the default post for the default user',
             'intLikes'          =>  0,
-            'intUserID'         =>  0,
-            'intMultimediaID'   =>  2
+            'intUserID'         =>  1,
+            'intMultimediaID'   =>  3
         ]);
 
     }

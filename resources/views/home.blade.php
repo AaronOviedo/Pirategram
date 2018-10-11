@@ -12,7 +12,7 @@
                 src="https://www.eldiario.es/static/EDIDiario/images/facebook-default-photo.jpg">
             <a href=""><h4 style="display: inline-block; margin-left: 10px;">Username</h4></a>
         </div>
-        <div>
+        <div class="postContainer">
             <h3>Post title</h3>
             <h4>Post content</h4>
             <div style="width: 90%; margin: auto;">
