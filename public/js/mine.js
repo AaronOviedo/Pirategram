@@ -189,13 +189,15 @@ $(document).ready(function(){
         var userID = $('#userID').val();
 
         var varJSON = JSON.stringify({title:postTitle, content:postContent, id:userID});
-
-        console.log(varJSON);
         $.ajax({
             method: 'post',
             url: formAction,
-            data: varJSON,
-            headers: {'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')},
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                'title':    $('#postTitleID').val(), 
+                'content':  $('#postContentID').val(), 
+                'id':       $('#userID').val()
+            },
             success: function(data){
                 if(data.errors){
                     console.log(data.errors.name);

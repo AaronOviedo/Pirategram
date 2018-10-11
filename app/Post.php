@@ -7,6 +7,8 @@ use Pirategram\Multimedia;
 
 class Post extends Model
 {
+    protected $fillable = ['strTitle', 'strDescription', 'intLikes', 'intUserID', 'intMultimediaID'];
+
     protected $table = 'catPost';
 
     public function multimedia(){
