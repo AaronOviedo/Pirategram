@@ -37,13 +37,13 @@ class PublicationController extends Controller
     {
         $newPost = Post::create([
             'strTitle'          =>  $request->title,
-            'strContent'        =>  $request->content,
+            'strDescription'    =>  $request->content,
             'intLikes'          =>  0,
             'intUserID'         =>  $request->id,
-            'intMultimedia'     =>  3
+            'intMultimediaID'   =>  3
         ]);
 
-        return response()->json($newPost);
+        return $newPost;
     }
 
     /**
