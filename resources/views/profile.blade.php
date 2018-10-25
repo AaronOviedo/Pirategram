@@ -8,17 +8,22 @@
     use Pirategram\Multimedia;
     use Pirategram\Post;
 
+    if($userID == )
     $user = myUser::where('id', '=', $_SESSION['userID'])->first();
+    //dd($user);
+    
+    /*
     $userProfile = Multimedia::where('id', '=', $user->intProfile)->first();
     $userCover = Multimedia::where('id', '=', $user->intCover)->first();
     $allPost = Post::where('intUserID', '=', $user->id)->get();
+    */
 @endphp
     <div class="container">
         <div class="jumbotron" style=" padding-left: 10px;  width: 92.5%; margin: 20px auto;
-        background-image: url({{$userCover->strLink}}); background-repeat: no-repeat;
+        background-image: url({{$user->cover->strLink}}); background-repeat: no-repeat;
         background-size: 100% 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
             <div style="display: inline-block; max-width: 200px; max-height: 200px; min-width: 50px; min-height: 50px;">
-                <img data-toggle="modal" data-target="#modalImg" src="{{$userProfile->strLink}}"  class="img-circle imgGaleria" style=" max-width: 200px; max-height: 200px; 
+                <img data-toggle="modal" data-target="#modalImg" src="{{$user->profile->strLink}}"  class="img-circle imgGaleria" style=" max-width: 200px; max-height: 200px; 
                         min-width: 50px; min-height: 50px;">
                 <!-- This button is for change Profile Picture (if the profile is ours) -->
                 <button style="margin-left: 18px; margin-top: 5px;" class="btn btn-primary">Change profile picture</button>
@@ -43,14 +48,11 @@
         </div>
 
         <div id='posts' class='postContainer'>
-            @foreach ($allPost as $singlePost)
-            @php
-                $postMultimedia = Multimedia::where('id', '=', $singlePost->intMultimediaID)->first(); 
-            @endphp
+            @foreach ($user->post as $singlePost)
                 <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
                     <div>
                         <img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" 
-                            src="{{$userProfile->strLink}}">
+                            src="{{$user->profile->strLink}}">
                         <a href="/myUser/{ {{$user->id}} }"><h4 style="display: inline-block; margin-left: 10px;">{{$user->strName}}</h4></a>
                     </div>
                     <div>
@@ -58,7 +60,7 @@
                         <h4>{{$singlePost->strDescription}}</h4>
                         <div style="width: 90%; margin: auto;">
                             <img data-toggle="modal" data-target="#modalImg" class="imgGaleria" style="width: 100%; height: 200px; display: inline;" 
-                            src="{{$postMultimedia->strLink}}">
+                            src="{{$singlePost->multimedia->strLink}}">
                         </div>
                         <div>
                             <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" 

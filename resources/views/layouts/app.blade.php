@@ -16,63 +16,12 @@
     <script src="js/mine.js"></script>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/myStyles.css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-    <style>
-        html, body {
-            background-color: #f1f1f1;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .full-height {
-            height: 100vh;
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-
-        .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-    </style>
 </head>
 <body>
     <div id="app">
@@ -84,11 +33,8 @@
 
                 @php
                     $user = Pirategram\myUser::where('id', '=', $_SESSION['userID'])->first();
-                    $photo = Pirategram\Multimedia::where('id', '=', $user->intProfile)->first();
+                    //$photo = Pirategram\Multimedia::where('id', '=', $user->intProfile)->first();
                     //dd($userPhoto->intProfile);
-                    if($photo != null){
-                        $link = $photo->strLink;
-                    }
                 @endphp
 
                 <div class="navbar-header">
@@ -98,7 +44,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <img src="{{$link}}" style="height:50px; width:50px;;">
+                        <img src="{{$$user->profile->strLink}}" class="PP">
                     </div>
     
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -125,7 +71,7 @@
         <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="well" style="margin:5%; background-color: #e3e7fd;" id="newPostForm">
+                    <div class="well morado" id="newPostForm">
                         <center>
                             <h1>New Post</h1>
                         </center>
@@ -139,7 +85,7 @@
                         <div class="form-group">
                             <label for="contenidoPublicacion" style="display: block;">Post content</label>
                             <p>(if you gonna use '#', take a space between them)</p>
-                            <textarea style="width: 100%; height: 100px; border-radius: 5px;" id="postContentID" name="postContent" placeholder="Content..." required></textarea>
+                            <textarea id="postContentID" name="postContent" placeholder="Content..." required></textarea>
                         </div>
                         <!--
                         <div class="form-group">
@@ -148,7 +94,7 @@
                         </div>
                         -->
                         <center>
-                            <button type="submit" class="btn btn-primary" style="margin-top:10px;">Post</button>
+                            <button type="submit" class="btn btn-primary submit">Post</button>
                         </center>
                         </form>
                     </div>

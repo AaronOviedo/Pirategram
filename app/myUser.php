@@ -14,27 +14,31 @@ class myUser extends Model
     protected $table = 'catUser';
     
     public function cover(){
-        return $this->belongsTo('Multimedia');
+        return $this->belongsTo('Pirategram\Multimedia', 'intCover');
     }
 
     public function profile(){
-        return $this->belongsTo('Multimedia');
+        return $this->belongsTo('Pirategram\Multimedia', 'intProfile');
     }
 
     public function coment(){
-        return $this->hasMany('Coment');
+        return $this->hasMany('Pirategram\Coment');
     }
 
     public function post(){
-        return $this->hasMany('Post');
+        return $this->hasMany('Pirategram\Post', 'id');
     }
 
     public function pvtMsg(){
-        return $this->belongsToMany('myUser', 'relPvtMsg', 'intReceiveID', 'intSendID');
+        return $this->belongsToMany('Pirategram\myUser', 'relPvtMsg', 'intReceiveID', 'intSendID');
     }
 
     public function follow(){
-        return $this->belongsToMany('myUser', 'relFollow', 'intFollowedID', 'intFollowerID');
+        return $this->belongsToMany('Pirategram\myUser', 'relFollow', 'intFollowedID', 'intFollowerID');
+    }
+
+    public function postLiked(){
+        return $this->belongsToMany('Pirategram\Post', 'relPostLiked');
     }
 
 }

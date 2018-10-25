@@ -9,10 +9,10 @@ class Coment extends Model
     protected $table = 'catComent';
 
     public function post(){
-        return $this->belongsTo('Post');
+        return $this->belongsTo('Pirategram\Post', 'intPostID');
     }
 
     public function user(){
-        return $this->belongsTo('myUser');
+        return $this->belongsTo('Pirategram\myUser', 'intUserID');
     }
 }

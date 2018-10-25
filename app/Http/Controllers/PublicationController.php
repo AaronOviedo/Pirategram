@@ -4,6 +4,9 @@ namespace Pirategram\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Pirategram\Post;
+use Pirategram\myUser;
+use Pirategram\Multimedia;
+use Pirategram\Coment;
 
 class PublicationController extends Controller
 {
@@ -42,6 +45,9 @@ class PublicationController extends Controller
             'intUserID'         =>  $request->id,
             'intMultimediaID'   =>  3
         ]);
+
+        //$user = myUser::find($newPost->intUserID);
+        //$multimedia = Multimedia::find($newPost->intMultimediaID);
 
         return $newPost;
     }

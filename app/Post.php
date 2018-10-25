@@ -4,6 +4,8 @@ namespace Pirategram;
 
 use Illuminate\Database\Eloquent\Model;
 use Pirategram\Multimedia;
+use Pirategram\myUser;
+use Pirategram\Coment;
 
 class Post extends Model
 {
@@ -12,14 +14,14 @@ class Post extends Model
     protected $table = 'catPost';
 
     public function multimedia(){
-        return $this->belongsTo('Pirategram\Multimedia');
+        return $this->belongsTo('Pirategram\Multimedia', 'intMultimediaID');
     }
 
     public function coment(){
-        return $this->belongsTo('Pirategram\Coment');
+        return $this->hasMany('Pirategram\Coment');
     }
 
     public function user(){
-        return $this->belongsTo('Pirategram\myUser');
+        return $this->belongsTo('Pirategram\myUser', 'intUserID');
     }
 }

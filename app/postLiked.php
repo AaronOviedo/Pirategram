@@ -4,7 +4,7 @@ namespace Pirategram;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PvtMsg extends Model
+class postLiked extends Model
 {
-    protected $table = 'relPvtMsg';
+    protected $table = 'relPostLiked';
 }
