@@ -5,78 +5,24 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <title>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- CSRF for Forms -->
         <meta name="csrf-token" content="{{{ csrf_token() }}}">
 
+        <!-- Scripts -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/mine.js"></script>
     
+        <!-- Styles -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="stylesheet" href="css/myStyles.css">
 
         <!-- Fonts -->
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #f1f1f1;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-
-            #registroForm{
-                background-color: #e3e7fd;
-                margin-top: 5%;
-                margin-right: 15%;
-            }
-        </style>
     </head>
     <body>
         <nav class="navbar navbar-light" style="background-color: #e3e7fd;">
@@ -101,7 +47,7 @@
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="well" style="margin:5%; background-color: #e3e7fd;" id="loginForm">
+                    <div class="well morado"  id="loginForm">
                         <center>
                             <h1>Welcome</h1>
                             <h3>Sign in</h3>
@@ -116,7 +62,7 @@
                                 <input id="passwordID" name="password" type="password" class="form-control" placeholder="Password" required>
                             </div>
                             <center>
-                                <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center" id="iniciarSesion">Login</button>
+                                <button type="submit" class="btn btn-primary moveDown" align="center" id="iniciarSesion">Login</button>
                             </center>
                         </form>
                     </div>
@@ -159,7 +105,7 @@
                     </select>
                 </div>
                 <center>
-                    <button type="submit" class="btn btn-primary" style="margin-top:10px;" align="center">Register</button>
+                    <button type="submit" class="btn btn-primary moveDown" align="center">Register</button>
                 </center>
             </form>
         </div>

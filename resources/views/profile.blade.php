@@ -8,15 +8,15 @@
     use Pirategram\Multimedia;
     use Pirategram\Post;
 
-    if($userID == )
-    $user = myUser::where('id', '=', $_SESSION['userID'])->first();
-    //dd($user);
-    
     /*
-    $userProfile = Multimedia::where('id', '=', $user->intProfile)->first();
-    $userCover = Multimedia::where('id', '=', $user->intCover)->first();
-    $allPost = Post::where('intUserID', '=', $user->id)->get();
+    if($_SESSION['myProfile'] == true){
+        $user = myUser::where('id', '=', $_SESSION['userID'])->first();
+    }else{
+        $user = myUser::where('id', '=', $searchUser)->first();
+    }
     */
+
+    $user = myUser::where('id', '=', $_SESSION['userID'])->first();
 @endphp
     <div class="container">
         <div class="jumbotron" style=" padding-left: 10px;  width: 92.5%; margin: 20px auto;
@@ -27,9 +27,9 @@
                         min-width: 50px; min-height: 50px;">
                 <!-- This button is for change Profile Picture (if the profile is ours) -->
                 <button style="margin-left: 18px; margin-top: 5px;" class="btn btn-primary">Change profile picture</button>
-                <!-- This button is for change Profile Picture (if the profile is ours) -->
+                <!-- This button is for follow the user -->
                 <button style="margin-left: 18px; margin-top: 5px;" 
-                        data-idusuarioperfil="intUserID" 
+                        data-idusuarioperfil="{{$user->id}}" 
                         class="btn btn-default follow" data-action="unfollow">Follow</button>
             </div>
         </div>
@@ -64,7 +64,6 @@
                         </div>
                         <div>
                             <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" 
-                                    style="margin-top: 10px; display: inline-block;"
                                     class="btn btn-primary like" data-liked="true" >
                                     LIKE
                             </button>
@@ -91,10 +90,10 @@
                                         <input type="hidden" name="place" value="home">
                                         <div class="form-group">
                                             <label for="contenidoComentario" style="display: block;">Comment: </label>
-                                            <textarea style="width: 100%; height: 50px; border-radius: 5px;" id="contenidoComentario" name="contenidoComentario" placeholder="New comment..." required></textarea>
+                                            <textarea id="contenidoComentario" name="contenidoComentario" placeholder="New comment..." required></textarea>
                                         </div>
                                         <center>
-                                            <button type="submit" class="btn btn-primary" style="margin-top:0px;" align="center" id="publicarComentario">Post comment</button>
+                                            <button type="submit" class="btn btn-primary" align="center" id="publicarComentario">Post comment</button>
                                         </center>
                                     </form>
                                 </div>
@@ -118,7 +117,7 @@
                                 <h4 class="modal-title" id="myModalLabel">Galery</h4>
                             </div>
                                 <div class="modal-body">
-                                    <img id="imgModalGallery" style="width: 100%; height: 500px;">
+                                    <img class="imgModalGallery" style="">
                                 </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

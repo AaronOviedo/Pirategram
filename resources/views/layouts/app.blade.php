@@ -15,6 +15,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/mine.js"></script>
 
+    <!-- Styles -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/myStyles.css">
 
@@ -38,13 +39,13 @@
                 @endphp
 
                 <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <button type="button" class="navbar-toggle collapsed moveDown" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <img src="{{$$user->profile->strLink}}" class="PP">
+                        <img src="{{$user->profile->strLink}}" class="PP moveDown">
                     </div>
     
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -62,7 +63,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav pull-right">
-                        <!-- Authentication Links -->
+                    <center>
+                        <button class="btn btn-secondary moveDown">Logout </button>
+                    </center>
                     </ul>
                 </div>
             </div>
@@ -94,7 +97,7 @@
                         </div>
                         -->
                         <center>
-                            <button type="submit" class="btn btn-primary submit">Post</button>
+                            <button type="submit" class="btn btn-primary moveDown">Post</button>
                         </center>
                         </form>
                     </div>

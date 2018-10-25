@@ -6,26 +6,27 @@
     $user = Pirategram\myUser::where('id', '=', $_SESSION['userID'])->first();
 @endphp
 <div class="container">
+    @foreach ($user->post as $singlePost)
+
     <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
         <div>
             <img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" 
-                src="https://www.eldiario.es/static/EDIDiario/images/facebook-default-photo.jpg">
-            <a href=""><h4 style="display: inline-block; margin-left: 10px;">Username</h4></a>
+            src="{{$user->multimedia->strLink}}">
+            <a href=""><h4 style="display: inline-block; margin-left: 10px;">{{$user->strName}}</h4></a>
         </div>
         <div class="postContainer">
-            <h3>Post title</h3>
-            <h4>Post content</h4>
+            <h3>{{$singlePost->strTitle}}</h3>
+            <h4>{{$singlePost->strDescription}}</h4>
             <div style="width: 90%; margin: auto;">
                 <img data-toggle="modal" data-target="#modalImg" class="imgGaleria" style="width: 100%; height: 200px; display: inline;" 
-                src="http://tierraaltatuito.com/wp-content/uploads/2017/11/WERE-WORKING.jpg">
+                src="{{$singlePost->multimedia->strLink}}">
             </div>
             <div>
-                <button data-idusuario="intUserID" data-idpublicacion="intPostID" 
-                        style="margin-top: 10px; display: inline-block;"
+                <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" 
                         class="btn btn-primary like" data-liked="true" >
                         LIKE
                 </button>
-                <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="intPostID">Likes #</p>
+                <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="intPostID">{{$singlePost->intLikes}}</p>
                 <button id="comments-intPostID" style="margin-top: 10px; display: inline-block; margin-left: 15px;" type="button" data-idpublicacion="intPostID" class="btn btn-default comments" data-toggle="modal" data-target="#modalComments">New comment</button>
             </div>
         </div>
@@ -80,5 +81,6 @@
             </div>
         </div>
     </div>
+    @endforeach
 </div>
 @endsection

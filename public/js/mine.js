@@ -129,24 +129,6 @@ $(document).ready(function(){
         $("#imgModalGallery").attr("src", src);
     });
 
-    /*$("#formRegister").submit(function(event){
-        event.preventDefault();
-
-        var formAction = $(this).attr("action");
-
-        var vName = $("#nameID").val();
-        var vEmail = $("#emailID").val();
-        var vPassword = $("#passwordID").val();
-        var vDate = $("#dateID").val();
-        var vGender = $("#genderID").val();
-
-        var varJSON = JSON.stringify({name:vName, email:vEmail, password:vPassword, date:vDate, gender:vGender});
-
-        console.log(varJSON);
-
-        ajaxPost(formAction, varJSON, false);
-    });*/
-
     /*
     $("#formNewPost").submit(function(e){
         e.preventDefault();

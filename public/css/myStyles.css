@@ -53,7 +53,7 @@ input{
     margin-bottom: 30px;
 }
 
-button.submit{
+.moveDown{
     margin-top:10px;
 }
 
@@ -69,5 +69,21 @@ textarea{
 }
 img.PP{
     height:50px; 
-    width:50px;;
+    width:50px;
+    margin:0px;
+    padding: 0px;
+}
+
+#registroForm{
+    background-color: #e3e7fd;
+    margin-top: 5%;
+    margin-right: 15%;
+}
+.like{
+    margin-top: 10px; 
+    display: inline-block;
+}
+.imgModalGallery{
+    width: 100%; 
+    height: 500px;
 }

@@ -18,7 +18,7 @@ class Post extends Model
     }
 
     public function coment(){
-        return $this->hasMany('Pirategram\Coment');
+        return $this->hasMany('Pirategram\Coment', 'id');
     }
 
     public function user(){

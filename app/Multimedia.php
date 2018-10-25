@@ -11,14 +11,14 @@ class Multimedia extends Model
     protected $table = 'catMultimedia';
 
     public function cover(){
-        return $this->hasOne('Pirategram\myUser');
+        return $this->hasOne('Pirategram\myUser', 'id');
     }
     
     public function profile(){
-        return $this->hasOne('Pirategram\myUser');
+        return $this->hasOne('Pirategram\myUser', 'id');
     }
 
     public function post(){
-        return $this->hasMany('Pirategram\Post');
+        return $this->hasMany('Pirategram\Post', 'id');
     }
 }

@@ -22,7 +22,7 @@ class myUser extends Model
     }
 
     public function coment(){
-        return $this->hasMany('Pirategram\Coment');
+        return $this->hasMany('Pirategram\Coment', 'id');
     }
 
     public function post(){
@@ -30,11 +30,11 @@ class myUser extends Model
     }
 
     public function pvtMsg(){
-        return $this->belongsToMany('Pirategram\myUser', 'relPvtMsg', 'intReceiveID', 'intSendID');
+        return $this->belongsToMany('Pirategram\myUser', 'relPvtMsg', 'id', 'id');
     }
 
     public function follow(){
-        return $this->belongsToMany('Pirategram\myUser', 'relFollow', 'intFollowedID', 'intFollowerID');
+        return $this->belongsToMany('Pirategram\myUser', 'relFollow', 'id', 'id');
     }
 
     public function postLiked(){
