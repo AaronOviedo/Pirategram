@@ -25,18 +25,20 @@
 
 </head>
 <body>
+    @php
+    if (isset($_SESSION['userID'])) {
+        $user = Pirategram\myUser::where('id', '=', $_SESSION['userID'])->first();
+    } else {
+        $user = false;
+    }
+    @endphp
+    @if ($user != false)
     <div id="app">
         <nav class="navbar navbar-light" style="background-color: #e3e7fd;">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-
-                @php
-                    $user = Pirategram\myUser::where('id', '=', $_SESSION['userID'])->first();
-                    //$photo = Pirategram\Multimedia::where('id', '=', $user->intProfile)->first();
-                    //dd($userPhoto->intProfile);
-                @endphp
 
                 <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed moveDown" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -64,7 +66,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav pull-right">
                     <center>
-                        <button class="btn btn-secondary moveDown">Logout </button>
+                        <form action="logout" method="get">
+                            <button type="submit" class="btn btn-secondary moveDown">Logout </button>
+                        </form>
                     </center>
                     </ul>
                 </div>
@@ -78,24 +82,21 @@
                         <center>
                             <h1>New Post</h1>
                         </center>
-                        <form id="formNewPost" method="post" action="/newPost">
+                        <form id="formNewPost" method="post" action="/newPost" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input id="userID" type="hidden" name="userID" value="{{$user->id}}">
                                 <div class="form-group">
                                     <label for="tituloPublicacion" >Post title</label>
-                                    <input id="postTitleID" name="postTitle" type="text" class="form-control" placeholder="Título" required>
+                                    <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Título" required>
                                 </div>
                         <div class="form-group">
                             <label for="contenidoPublicacion" style="display: block;">Post content</label>
-                            <p>(if you gonna use '#', take a space between them)</p>
-                            <textarea id="postContentID" name="postContent" placeholder="Content..." required></textarea>
+                            <textarea id="postContent" name="postContent" placeholder="Content..." required></textarea>
                         </div>
-                        <!--
                         <div class="form-group">
-                            <label for="imagenPublicacion">Image</label>
-                            <input type="file" id="postImageID" name="postImage" class="form-control">
+                            <label for="imagenPublicacion">Multimedia</label>
+                            <input type="file" id="postMultimedia" name="postMultimedia" class="form-control" required>
                         </div>
-                        -->
                         <center>
                             <button type="submit" class="btn btn-primary moveDown">Post</button>
                         </center>
@@ -109,5 +110,8 @@
             @yield('content')
         </main>
     </div>
+    @else
+        <script>window.location = "/";</script>
+    @endif
 </body>
 </html>

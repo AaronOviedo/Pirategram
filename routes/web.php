@@ -15,6 +15,8 @@ Route::get('/', function () {
     return View("welcome");
 });
 
+Route::get('/logout', 'myUserController@logout');
+
 Route::resource('myUser', 'myUserController');
 Route::resource('home', 'HomeController');
 Route::resource('newPost', 'PublicationController');

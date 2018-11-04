@@ -80,8 +80,8 @@ class myUserController extends Controller
             'strPassword'           =>  $request->password,
             'dateBirth'             =>  $request->date,
             'strGender'             =>  $gen,
-            'intProfile'            =>  1,
-            'intCover'              =>  0
+            'intProfile'            =>  2,
+            'intCover'              =>  1
         ]);
 
         session_start();
@@ -100,7 +100,8 @@ class myUserController extends Controller
     {
         $myUser = myUser::find($id);
 
-        echo $myUser;
+        //dd($myUser);
+        return redirect()->route('profile', ['userProfile' => $myUser]);
     }
 
     /**
@@ -135,5 +136,13 @@ class myUserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // Function to logout
+    public function logout(){
+        session_start();
+        session_destroy();
+
+        return redirect('/');
     }
 }

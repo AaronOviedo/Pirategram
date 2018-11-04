@@ -15,8 +15,11 @@
         $user = myUser::where('id', '=', $searchUser)->first();
     }
     */
-
-    $user = myUser::where('id', '=', $_SESSION['userID'])->first();
+    if($userProfile == null){
+        $user = myUser::where('id', '=', $_SESSION['userID'])->first();
+    }else{
+        $user = $userProfile;
+    }
 @endphp
     <div class="container">
         <div class="jumbotron" style=" padding-left: 10px;  width: 92.5%; margin: 20px auto;

@@ -7,6 +7,7 @@ use Pirategram\Post;
 use Pirategram\myUser;
 use Pirategram\Multimedia;
 use Pirategram\Coment;
+use Validator;
 
 class PublicationController extends Controller
 {
@@ -38,13 +39,36 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
+        return $request->postTitle;
+        $Validator = Validator::make($request->all(), [
+            'postMultimedia' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        if($Validator->passes()){
+            $postMultimedia = $request->file('postMultimedia');
+            $n = rand() . '.' . $postMultimedia->getClientOriginalExtension();
+            $newPath = $postMultimedia->storeAs('multimedia', $n);
+
+            $newMultimedia = Multimedia::create([
+                'strLink'   =>  $newPath
+            ]);
+        }else{
+            return response()->json([
+                'message' => $Validator->errors()->all(),
+
+                ]);
+        }
         $newPost = Post::create([
-            'strTitle'          =>  $request->title,
-            'strDescription'    =>  $request->content,
+            'strTitle'          =>  $request->postTitle,
+            'strDescription'    =>  $request->postContent,
             'intLikes'          =>  0,
             'intUserID'         =>  $request->id,
             'intMultimediaID'   =>  3
         ]);
+
+        $newPost['strLink'] = $newPost->multimedia->strLink;
+        $newPost['intUserID'] = $newPost->user->id;
+        $newPost['strUserProfile'] = $newPost->user->profile->strLink;
+        $newPost['strUserName'] = $newPost->user->strName;
 
         //$user = myUser::find($newPost->intUserID);
         //$multimedia = Multimedia::find($newPost->intMultimediaID);
