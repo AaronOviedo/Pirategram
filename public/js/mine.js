@@ -168,9 +168,10 @@ $(document).ready(function(){
          
         $.post(formAction, {
             '_token': $('meta[name=csrf-token]').attr('content'),
-            'postTitle': 'hola'
-          }).then((data)=>{
+            'postTitle': 'hola',
+            'joel': 'joel'
+        }).then((data)=>{
             console.log(data);
-          });
+        });
     });
 });

@@ -39,7 +39,11 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json([$request->request->get('postTitle')], 200);
+        $data = [
+            'post' => $request->request->get('postTitle'),
+            'joel' => $request->request->get('joel')
+        ];
+        return response()->json($data, 200);
         $Validator = Validator::make($request->all(), [
             'postMultimedia' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
