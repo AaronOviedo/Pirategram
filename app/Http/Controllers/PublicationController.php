@@ -65,6 +65,7 @@ class PublicationController extends Controller
         $newPost['intUserID'] = $newPost->user->id;
         $newPost['strUserProfile'] = $newPost->user->profile->strLink;
         $newPost['strUserName'] = $newPost->user->strName;
+        $newPost['strPostLink'] = $newMultimedia->strLink;
 
         //$user = myUser::find($newPost->intUserID);
         //$multimedia = Multimedia::find($newPost->intMultimediaID);

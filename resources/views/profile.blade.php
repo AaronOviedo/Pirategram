@@ -17,28 +17,31 @@
     */
     $user = myUser::where('id', '=', $_SESSION['userID'])->first();
 @endphp
-@isset($userProfile)
+@if(session('userProfile'))
     @php
-        if($userProfile == null){
+        if(session('userProfile') == null){
             $user = myUser::where('id', '=', $_SESSION['userID'])->first();
         }else{
-            $user = $userProfile;
+            $user = session('userProfile');
         }
     @endphp
-@endisset
-    <div class="container">
+@endif
+    <div class="container postDiv">
         <div class="jumbotron" style=" padding-left: 10px;  width: 92.5%; margin: 20px auto;
         background-image: url({{$user->cover->strLink}}); background-repeat: no-repeat;
         background-size: 100% 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
             <div style="display: inline-block; max-width: 200px; max-height: 200px; min-width: 50px; min-height: 50px;">
                 <img data-toggle="modal" data-target="#modalImg" src="{{$user->profile->strLink}}"  class="img-circle imgGaleria" style=" max-width: 200px; max-height: 200px; 
                         min-width: 50px; min-height: 50px;">
-                <!-- This button is for change Profile Picture (if the profile is ours) -->
-                <button style="margin-left: 18px; margin-top: 5px;" class="btn btn-primary">Change profile picture</button>
-                <!-- This button is for follow the user -->
-                <button style="margin-left: 18px; margin-top: 5px;" 
-                        data-idusuarioperfil="{{$user->id}}" 
-                        class="btn btn-default follow" data-action="unfollow">Follow</button>
+                @if(session('userProfile'))    
+                    <!-- This button is for follow the user -->
+                    <button style="margin-left: 18px; margin-top: 5px;" 
+                    data-idusuarioperfil="{{$user->id}}" 
+                    class="btn btn-default follow" data-action="unfollow">Follow</button>
+                @else
+                    <!-- This button is for change Profile Picture (if the profile is ours) -->
+                    <button style="margin-left: 18px; margin-top: 5px;" class="btn btn-default">Change profile picture</button>
+                @endif
             </div>
         </div>
 
@@ -78,7 +81,7 @@
                                     class="btn btn-primary like" data-liked="true" >
                                     LIKE
                             </button>
-                            <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="{{$singlePost->id}}">Likes {{$singlePost->intLikes}}</p>
+                            <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px;" id="{{$singlePost->id}}">Likes: {{$singlePost->intLikes}}</p>
                             <button id="comments-intPostID" style="margin-top: 10px; display: inline-block; margin-left: 15px;" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments" data-toggle="modal" data-target="#modalComments">New comment</button>
                         </div>
                     </div>
@@ -128,7 +131,7 @@
                                 <h4 class="modal-title" id="myModalLabel">Galery</h4>
                             </div>
                                 <div class="modal-body">
-                                    <img class="imgModalGallery" style="">
+                                    <img class="imgModalGallery">
                                 </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
