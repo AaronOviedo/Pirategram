@@ -88,7 +88,7 @@ class myUserController extends Controller
         session_start();
         $_SESSION["userID"] = $myUser->id;
 
-        return redirect()->route('home');
+        return redirect('home');
     }
 
     /**
@@ -102,7 +102,7 @@ class myUserController extends Controller
         $myUser = myUser::find($id);
 
         //dd($myUser);
-        return redirect()->route('profile', ['userProfile' => $myUser]);
+        return redirect('profile')->with('userProfile',$myUser);
     }
 
     /**

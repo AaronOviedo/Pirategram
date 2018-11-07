@@ -15,12 +15,17 @@
         $user = myUser::where('id', '=', $searchUser)->first();
     }
     */
-    if($userProfile == null){
-        $user = myUser::where('id', '=', $_SESSION['userID'])->first();
-    }else{
-        $user = $userProfile;
-    }
+    $user = myUser::where('id', '=', $_SESSION['userID'])->first();
 @endphp
+@isset($userProfile)
+    @php
+        if($userProfile == null){
+            $user = myUser::where('id', '=', $_SESSION['userID'])->first();
+        }else{
+            $user = $userProfile;
+        }
+    @endphp
+@endisset
     <div class="container">
         <div class="jumbotron" style=" padding-left: 10px;  width: 92.5%; margin: 20px auto;
         background-image: url({{$user->cover->strLink}}); background-repeat: no-repeat;
@@ -51,12 +56,15 @@
         </div>
 
         <div id='posts' class='postContainer'>
-            @foreach ($user->post as $singlePost)
+            @php
+                $posts = Pirategram\Post::where('intUserID', '=', $user->id)->orderBy('updated_at', 'desc')->get();
+            @endphp
+            @foreach ($posts as $singlePost)
                 <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
                     <div>
                         <img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" 
                             src="{{$user->profile->strLink}}">
-                        <a href="/myUser/{ {{$user->id}} }"><h4 style="display: inline-block; margin-left: 10px;">{{$user->strName}}</h4></a>
+                        <a href="/myUser/{{$user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$user->strName}}</h4></a>
                     </div>
                     <div>
                         <h3>{{$singlePost->strTitle}}</h3>
