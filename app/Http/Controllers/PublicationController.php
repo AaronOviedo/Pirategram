@@ -51,7 +51,9 @@ class PublicationController extends Controller
                 'strLink'   =>  $newPath
             ]);
         }else{
-            return 'Error en la validacion';
+            return response()->json([
+                'message'       =>  $Validator->errors()->all()
+            ]);
         }
         $newPost = Post::create([
             'strTitle'          =>  $request->postTitle,
