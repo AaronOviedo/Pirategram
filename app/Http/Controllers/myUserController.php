@@ -26,7 +26,7 @@ class myUserController extends Controller
             $userID = $loginUser->id;
             $_SESSION["userID"] = $userID;
     
-            return redirect('home');
+            return redirect('/home');
         }else{
             return redirect('/');
         }

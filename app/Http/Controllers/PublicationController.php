@@ -43,7 +43,7 @@ class PublicationController extends Controller
             'post' => $request->request->get('postTitle'),
             'joel' => $request->request->get('joel')
         ];
-        return response()->json($data, 200);
+        return response()->json([$data], 200);
         $Validator = Validator::make($request->all(), [
             'postMultimedia' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
