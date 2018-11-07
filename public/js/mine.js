@@ -176,8 +176,8 @@ $(document).ready(function(){
             cache: false,
             processData: false,
             success: function(data){
-                if(data.errors){
-                    console.log(data.errors.name);
+                if(data.message){
+                    alert(data.message);
                 }else{
                     console.log(data);
                     $('#newPostModal').modal('toggle');
