@@ -10,7 +10,7 @@
     }
     //$allUsers = Pirategram\myUser::all();
 @endphp
-<div class="container">
+<div class="container postDiv">
     @if ($user != false)
     @php
         //dd($singleUser->post);
@@ -38,7 +38,7 @@
                                 class="btn btn-primary like" data-liked="true" >
                                 LIKE
                         </button>
-                        <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="intPostID">{{$singlePost->intLikes}}</p>
+                        <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="intPostID">Likes: {{$singlePost->intLikes}}</p>
                         <button id="comments-intPostID" style="margin-top: 10px; display: inline-block; margin-left: 15px;" type="button" data-idpublicacion="intPostID" class="btn btn-default comments" data-toggle="modal" data-target="#modalComments">New comment</button>
                     </div>
                 </div>

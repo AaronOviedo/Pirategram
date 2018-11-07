@@ -101,7 +101,7 @@ class myUserController extends Controller
         $myUser = myUser::find($id);
 
         //dd($myUser);
-        return redirect('profile')->with('userProfile',$myUser);
+        return redirect('profile')->with('userProfile', $myUser);
     }
 
     /**
