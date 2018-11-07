@@ -8,6 +8,7 @@ use Pirategram\Post;
 
 class Multimedia extends Model
 {
+    protected $fillable = ['strLink'];
     protected $table = 'catMultimedia';
 
     public function cover(){

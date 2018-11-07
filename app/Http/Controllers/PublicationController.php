@@ -39,30 +39,26 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->postTitle;
         $Validator = Validator::make($request->all(), [
             'postMultimedia' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
         if($Validator->passes()){
             $postMultimedia = $request->file('postMultimedia');
             $n = rand() . '.' . $postMultimedia->getClientOriginalExtension();
-            $newPath = $postMultimedia->storeAs('multimedia', $n);
+            $newPath = $postMultimedia->storeAs('multimedia', $n, 'public');
 
             $newMultimedia = Multimedia::create([
                 'strLink'   =>  $newPath
             ]);
         }else{
-            return response()->json([
-                'message' => $Validator->errors()->all(),
-
-                ]);
+            return 'Error en la validacion';
         }
         $newPost = Post::create([
             'strTitle'          =>  $request->postTitle,
             'strDescription'    =>  $request->postContent,
             'intLikes'          =>  0,
-            'intUserID'         =>  $request->id,
-            'intMultimediaID'   =>  3
+            'intUserID'         =>  $request->userID,
+            'intMultimediaID'   =>  $newMultimedia->id
         ]);
 
         $newPost['strLink'] = $newPost->multimedia->strLink;

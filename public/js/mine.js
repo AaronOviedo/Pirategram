@@ -171,7 +171,7 @@ $(document).ready(function(){
             url: formAction,
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:new FormData(this),
-            dataType:'JSON',
+            //dataType:'JSON',
             contentType: false,
             cache: false,
             processData: false,

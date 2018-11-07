@@ -8,17 +8,22 @@
     } else {
         $user = false;
     }
-    $allUsers = Pirategram\myUser::all();
+    //$allUsers = Pirategram\myUser::all();
 @endphp
 <div class="container">
     @if ($user != false)
-    @foreach ($allUsers as $singleUser)
-        @foreach ($singleUser->post as $singlePost)
+    @php
+        //dd($singleUser->post);
+        //dd(Pirategram\Post::all());
+        $posts = Pirategram\Post::orderBy('updated_at')->get();
+        //$posts = Pirategram\Post::where('intUserID', '=', $singleUser->id)->orderBy('updated_at', 'desc')->get();
+    @endphp
+        @foreach ($posts->reverse() as $singlePost)
             <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
                 <div>
                     <img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" 
-                    src="{{$singleUser->profile->strLink}}">
-                    <a href="/myUser/{{$singleUser->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singleUser->strName}}</h4></a>
+                    src="{{$singlePost->user->profile->strLink}}">
+                    <a href="/myUser/{{$singlePost->user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singlePost->user->strName}}</h4></a>
 
                 </div>
                 <div class="postContainer">
@@ -29,7 +34,7 @@
                         src="{{$singlePost->multimedia->strLink}}">
                     </div>
                     <div>
-                        <button data-idusuario="{{$singleUser->id}}" data-idpublicacion="{{$singlePost->id}}" 
+                        <button data-idusuario="{{$singlePost->user->id}}" data-idpublicacion="{{$singlePost->id}}" 
                                 class="btn btn-primary like" data-liked="true" >
                                 LIKE
                         </button>
@@ -49,7 +54,7 @@
                             <h4 class="modal-title" id="myModalLabel">Comments</h4>
                             <div class="modal-body">
                                 <form method="post" action="comment" >                
-                                    <input type="hidden" name="idUsuario" value="{{$singleUser->id}}">
+                                    <input type="hidden" name="idUsuario" value="{{$singlePost->user->id}}">
                                     <input type="hidden" name="idPublicacion" id="idPublicacionHidden">
                                     <div class="form-group">
                                         <label for="contenidoComentario" style="display: block;">Comment: </label>
@@ -88,8 +93,7 @@
                     </div>
                 </div>
             </div>
-        @endforeach  
-    @endforeach
+        @endforeach 
     @else
         <script>window.location = "/";</script>
     @endif
