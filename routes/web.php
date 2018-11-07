@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('/logout', 'myUserController@logout');
 
 Route::resource('myUser', 'myUserController');
-Route::resource('home', 'HomeController');
+Route::get('/home', 'HomeController@index');
 Route::resource('newPost', 'PublicationController');
 Route::resource('profile', 'ProfileController');
 Route::resource('search', 'SearchController');
