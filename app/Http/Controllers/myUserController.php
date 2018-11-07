@@ -5,6 +5,7 @@ namespace Pirategram\Http\Controllers;
 use Illuminate\Http\Request;
 use Pirategram\myUser;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class myUserController extends Controller
 {
