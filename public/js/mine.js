@@ -166,26 +166,11 @@ $(document).ready(function(){
         e.preventDefault();
         var formAction = $(this).attr("action");
          
-        $.ajax({
-            method: 'post',
-            url: formAction,
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            data:new FormData(this),
-            dataType:'JSON',
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data){
-                if(data.errors){
-                    console.log(data.errors.name);
-                }else{
-                    console.log(data);
-                    //$('.postContainer').prepend('<div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; "><div><img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" src="' +data. +'"><a href="/myUser/{ {{$user->id}} }"><h4 style="display: inline-block; margin-left: 10px;">{{$user->strName}}</h4></a></div> <div><h3>{{$singlePost->strTitle}}</h3><h4>{{$singlePost->strDescription}}</h4><div style="width: 90%; margin: auto;"><img data-toggle="modal" data-target="#modalImg" class="imgGaleria" style="width: 100%; height: 200px; display: inline;" src="{{$postMultimedia->strLink}}"></div><div><button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" style="margin-top: 10px; display: inline-block;"class="btn btn-primary like" data-liked="true" >LIKE</button><p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="{{$singlePost->id}}">Likes {{$singlePost->intLikes}}</p><button id="comments-intPostID" style="margin-top: 10px; display: inline-block; margin-left: 15px;" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments" data-toggle="modal" data-target="#modalComments">New comment</button></div></div></div>');
-                }
-            },
-            error: function(){
-                console.log('Error');
-            }
-        });
+        $.post(formAction, {
+            '_token': $('meta[name=csrf-token]').attr('content'),
+            'postTitle': 'hola'
+          }).then((data)=>{
+            console.log(data);
+          });
     });
 });
