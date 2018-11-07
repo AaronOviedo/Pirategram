@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <button data-idusuario="{{$singlePost->user->id}}" data-idpublicacion="{{$singlePost->id}}" 
-                                class="btn btn-primary like" data-liked="true" >
+                                class="btn btn-default like" data-liked="true" >
                                 LIKE
                         </button>
                         <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="intPostID">Likes: {{$singlePost->intLikes}}</p>
