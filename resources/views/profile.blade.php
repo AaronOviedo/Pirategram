@@ -52,7 +52,7 @@
                 <h5>{{$user->strGender}}</h5>
             </div>
         </div>
-        <div style="margin: 30px auto; width: 50%;">
+        <div style="width: 50%;">
             <button id="btnPosts" class="btn btn-primary" style="margin-top:10px;">Posts</button>
             <button id="btnGallery" class="btn btn-primary" style="margin-top:10px;">Galery</button>
             <button id="btnUsersFollowers" class="btn btn-primary" style="margin-top:10px;">Users who he follow</button>
@@ -78,7 +78,7 @@
                         </div>
                         <div>
                             <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" 
-                                    class="btn btn-primary like" data-liked="true" >
+                                    class="btn btn-default like" data-liked="true" >
                                     LIKE
                             </button>
                             <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px;" id="{{$singlePost->id}}">Likes: {{$singlePost->intLikes}}</p>
