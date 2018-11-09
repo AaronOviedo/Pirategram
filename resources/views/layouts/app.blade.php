@@ -95,7 +95,7 @@
                         </div>
                         <div class="form-group">
                             <label for="imagenPublicacion">Multimedia</label>
-                            <input type="file" id="postMultimedia" name="postMultimedia" class="form-control" required>
+                            <input type="file" id="postMultimedia" name="postMultimedia" class="form-control hideInput" required>
                         </div>
                         <center>
                             <button type="submit" class="btn btn-primary moveDown">Post</button>

@@ -27,6 +27,7 @@
     @endphp
 @endif
     <div class="container postDiv">
+        <span id="spanUserID" data-value="{{$user->id}}"></span>
         <div class="jumbotron" style=" padding-left: 10px;  width: 92.5%; margin: 20px auto;
         background-image: url({{$user->cover->strLink}}); background-repeat: no-repeat;
         background-size: 100% 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
@@ -35,12 +36,14 @@
                         min-width: 50px; min-height: 50px;">
                 @if(session('userProfile'))    
                     <!-- This button is for follow the user -->
-                    <button style="margin-left: 18px; margin-top: 5px;" 
-                    data-idusuarioperfil="{{$user->id}}" 
-                    class="btn btn-default follow" data-action="unfollow">Follow</button>
+                    <button data-idusuarioperfil="{{$user->id}}" class="btn btn-default follow btnLeftPad" data-action="unfollow">Follow</button>
                 @else
                     <!-- This button is for change Profile Picture (if the profile is ours) -->
-                    <button style="margin-left: 18px; margin-top: 5px;" class="btn btn-default">Change profile picture</button>
+                    <input type="file" name="profile" id="profile" class="hideInput">
+                    <label for="profile" class="btn btn-default btnLeftPad">Change profile picture</label>
+
+                    <input type="file" name="cover" id="cover" class="hideInput">
+                    <label for="cover" class="btn btn-default btnLeftPad">Change cover picture</label>
                 @endif
             </div>
         </div>
@@ -48,7 +51,7 @@
         <div class="well" style="width: 92.5%; margin: -20px auto; border-top-left-radius: 0px; border-top-right-radius: 0px;
         border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
             <div style="display: inline-block;">
-                <h3>{{$user->strName}}</h3>
+                <h1>{{$user->strName}}</h1>
                 <h5>{{$user->strGender}}</h5>
             </div>
         </div>
@@ -63,26 +66,22 @@
                 $posts = Pirategram\Post::where('intUserID', '=', $user->id)->orderBy('updated_at', 'desc')->get();
             @endphp
             @foreach ($posts as $singlePost)
-                <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
+                <div class="well divPost">
                     <div>
-                        <img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" 
-                            src="{{$user->profile->strLink}}">
+                        <img class="img-circle imgProfile" src="{{$user->profile->strLink}}">
                         <a href="/myUser/{{$user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$user->strName}}</h4></a>
                     </div>
                     <div>
                         <h3>{{$singlePost->strTitle}}</h3>
                         <h4>{{$singlePost->strDescription}}</h4>
-                        <div style="width: 90%; margin: auto;">
-                            <img data-toggle="modal" data-target="#modalImg" class="imgGaleria" style="width: 100%; height: 200px; display: inline;" 
+                        <div>
+                            <img data-toggle="modal" data-target="#modalImg" class="imgGaleria imgWidth"
                             src="{{$singlePost->multimedia->strLink}}">
                         </div>
                         <div>
-                            <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" 
-                                    class="btn btn-default like" data-liked="true" >
-                                    LIKE
-                            </button>
-                            <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px;" id="{{$singlePost->id}}">Likes: {{$singlePost->intLikes}}</p>
-                            <button id="comments-intPostID" style="margin-top: 10px; display: inline-block; margin-left: 15px;" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments" data-toggle="modal" data-target="#modalComments">New comment</button>
+                            <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default like" data-liked="true" >LIKE</button>
+                            <p class="like" id="{{$singlePost->id}}">Likes: {{$singlePost->intLikes}}</p>
+                            <button id="comments-intPostID" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
                         </div>
                     </div>
                 </div>

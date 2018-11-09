@@ -7,6 +7,7 @@ use Pirategram\Post;
 use Pirategram\myUser;
 use Pirategram\Multimedia;
 use Pirategram\Coment;
+use Storage;
 use Validator;
 
 class PublicationController extends Controller
@@ -44,11 +45,12 @@ class PublicationController extends Controller
         ]);
         if($Validator->passes()){
             $postMultimedia = $request->file('postMultimedia');
-            $n = rand() . '.' . $postMultimedia->getClientOriginalExtension();
+            $n =  rand() . '.' . $postMultimedia->getClientOriginalExtension();
             $newPath = $postMultimedia->storeAs('multimedia', $n, 'public');
+            //$newPath = Storage::disk('public')->put('multimedia', $request->postMultimedia);
 
             $newMultimedia = Multimedia::create([
-                'strLink'   =>  $newPath
+                'strLink'   =>  'storage/' . $newPath
             ]);
         }else{
             return response()->json([

@@ -19,27 +19,22 @@
         //$posts = Pirategram\Post::where('intUserID', '=', $singleUser->id)->orderBy('updated_at', 'desc')->get();
     @endphp
         @foreach ($posts->reverse() as $singlePost)
-            <div class="well" style="width: 70%; margin: 40px auto; background-color:lightblue; " >
+            <div class="well divPost">
                 <div>
-                    <img  class="img-circle" style="width: 50px; height: 50px; display: inline-block;" 
-                    src="{{$singlePost->user->profile->strLink}}">
+                    <img class="img-circle imgProfile" src="{{$singlePost->user->profile->strLink}}">
                     <a href="/myUser/{{$singlePost->user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singlePost->user->strName}}</h4></a>
-
                 </div>
                 <div class="postContainer">
                     <h3>{{$singlePost->strTitle}}</h3>
                     <h4>{{$singlePost->strDescription}}</h4>
-                    <div style="width: 90%; margin: auto;">
-                        <img data-toggle="modal" data-target="#modalImg" class="imgGaleria" style="width: 100%; height: 200px; display: inline;" 
+                    <div>
+                        <img data-toggle="modal" data-target="#modalImg" class="imgGaleria imgWidth"
                         src="{{$singlePost->multimedia->strLink}}">
                     </div>
                     <div>
-                        <button data-idusuario="{{$singlePost->user->id}}" data-idpublicacion="{{$singlePost->id}}" 
-                                class="btn btn-default like" data-liked="true" >
-                                LIKE
-                        </button>
-                        <p style="display: inline-block; color: #337ab7; vertical-align: bottom; margin-left: 15px; " id="intPostID">Likes: {{$singlePost->intLikes}}</p>
-                        <button id="comments-intPostID" style="margin-top: 10px; display: inline-block; margin-left: 15px;" type="button" data-idpublicacion="intPostID" class="btn btn-default comments" data-toggle="modal" data-target="#modalComments">New comment</button>
+                        <button data-idusuario="{{$singlePost->user->id}}" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default like" data-liked="true" >LIKE</button>
+                        <p class="like" id="intPostID">Likes: {{$singlePost->intLikes}}</p>
+                        <button id="comments-intPostID" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
                     </div>
                 </div>
             </div>
@@ -85,7 +80,7 @@
                             <h4 class="modal-title" id="myModalLabel">Galery</h4>
                         </div>
                             <div class="modal-body">
-                                <img id="imgModalGallery" style="width: 100%; height: 500px;">
+                                <img class="imgModalGallery">
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
