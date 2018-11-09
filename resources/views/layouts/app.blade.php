@@ -94,8 +94,8 @@
                             <textarea id="postContent" name="postContent" placeholder="Content..." required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="imagenPublicacion">Multimedia</label>
                             <input type="file" id="postMultimedia" name="postMultimedia" class="form-control hideInput" required>
+                            <label for="postMultimedia" class="btn btn-default btnLeftPad">Multimedia</label>
                         </div>
                         <center>
                             <button type="submit" class="btn btn-primary moveDown">Post</button>
