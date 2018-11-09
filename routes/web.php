@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/logout', 'myUserController@logout');
+Route::post('newProfile', 'myUserController@newProfile');
+Route::post('newCover', 'myUserController@newCover');
 
 Route::resource('myUser', 'myUserController');
 Route::get('/home', 'HomeController@index');

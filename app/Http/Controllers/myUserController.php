@@ -4,8 +4,10 @@ namespace Pirategram\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Pirategram\myUser;
+use Pirategram\Multimedia;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
+use Storage;
+use Validator;
 
 class myUserController extends Controller
 {
@@ -146,4 +148,53 @@ class myUserController extends Controller
 
         return redirect('/');
     }
+
+    public function newProfile(Request $request){
+        $user = myUser::find($request->userID);
+        $Validator = Validator::make($request->all(), [
+            'newProfile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        if($Validator->passes()){
+            $newProfile = $request->file('newProfile');
+            $n =  rand() . '.' . $newProfile->getClientOriginalExtension();
+            $newPath = $newProfile->storeAs('multimedia', $n, 'public');
+            //$newPath = Storage::disk('public')->put('multimedia', $request->postMultimedia);
+
+            $newMultimedia = Multimedia::create([
+                'strLink'   =>  'storage/' . $newPath
+            ]);
+        }else{
+            return response()->json([
+                'message'       =>  $Validator->errors()->all()
+            ]);
+        }
+        $user->intProfile = $newMultimedia->id;
+        $user->save();
+        return 'reload';
+    }
+
+    public function newCover(Request $request){
+        $user = myUser::find($request->userID);
+        $Validator = Validator::make($request->all(), [
+            'newCover' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        if($Validator->passes()){
+            $newCover = $request->file('newCover');
+            $n =  rand() . '.' . $newCover->getClientOriginalExtension();
+            $newPath = $newCover->storeAs('multimedia', $n, 'public');
+            //$newPath = Storage::disk('public')->put('multimedia', $request->postMultimedia);
+
+            $newMultimedia = Multimedia::create([
+                'strLink'   =>  'storage/' . $newPath
+            ]);
+        }else{
+            return response()->json([
+                'message'       =>  $Validator->errors()->all()
+            ]);
+        }
+        $user->intCover = $newMultimedia->id;
+        $user->save();
+        return 'reload';
+    }
+
 }

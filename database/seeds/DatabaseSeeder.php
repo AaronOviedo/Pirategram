@@ -36,14 +36,5 @@ class DatabaseSeeder extends Seeder
             'intProfile'            =>  2,
             'intCover'              =>  1
         ]);
-        
-        Post::create([
-            'strTitle'          =>  'Default post',
-            'strDescription'    =>  'This is the default post for the default user',
-            'intLikes'          =>  0,
-            'intUserID'         =>  1,
-            'intMultimediaID'   =>  3
-        ]);
-
     }
 }
