@@ -19,7 +19,7 @@
         //$posts = Pirategram\Post::where('intUserID', '=', $singleUser->id)->orderBy('updated_at', 'desc')->get();
     @endphp
         @foreach ($posts->reverse() as $singlePost)
-            <div class="well divPost">
+            <div class="well divPost postContainer">
                 <div>
                     <img class="img-circle imgProfile" src="{{$singlePost->user->profile->strLink}}">
                     <a href="/myUser/{{$singlePost->user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singlePost->user->strName}}</h4></a>
