@@ -182,7 +182,6 @@ class myUserController extends Controller
             $newCover = $request->file('newCover');
             $n =  rand() . '.' . $newCover->getClientOriginalExtension();
             $newPath = $newCover->storeAs('multimedia', $n, 'public');
-            //$newPath = Storage::disk('public')->put('multimedia', $request->postMultimedia);
 
             $newMultimedia = Multimedia::create([
                 'strLink'   =>  'storage/' . $newPath

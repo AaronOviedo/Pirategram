@@ -8,13 +8,6 @@
     use Pirategram\Multimedia;
     use Pirategram\Post;
 
-    /*
-    if($_SESSION['myProfile'] == true){
-        $user = myUser::where('id', '=', $_SESSION['userID'])->first();
-    }else{
-        $user = myUser::where('id', '=', $searchUser)->first();
-    }
-    */
     $user = myUser::where('id', '=', $_SESSION['userID'])->first();
 @endphp
 @if(session('userProfile'))
