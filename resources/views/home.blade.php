@@ -10,7 +10,7 @@
     }
     //$allUsers = Pirategram\myUser::all();
 @endphp
-<div class="container postDiv">
+<div class="container postDiv postContainer">
     @if ($user != false)
     @php
         //dd($singleUser->post);
@@ -19,12 +19,12 @@
         //$posts = Pirategram\Post::where('intUserID', '=', $singleUser->id)->orderBy('updated_at', 'desc')->get();
     @endphp
         @foreach ($posts->reverse() as $singlePost)
-            <div class="well divPost postContainer">
+            <div class="well divPost">
                 <div>
                     <img class="img-circle imgProfile" src="{{$singlePost->user->profile->strLink}}">
                     <a href="/myUser/{{$singlePost->user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singlePost->user->strName}}</h4></a>
                 </div>
-                <div class="postContainer">
+                <div>
                     <h3>{{$singlePost->strTitle}}</h3>
                     <h4>{{$singlePost->strDescription}}</h4>
                     <div>
