@@ -121,4 +121,48 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('.divChat').ready(function(){
+        $.ajax({
+            method: 'post',
+            url: 'usersChat',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {id : $('meta[name="userID"]').attr('content')},
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data){
+                //console.log(message);
+                for(var user in data){
+                    if(!data.hasOwnProperty(user)) continue;
+                    console.log(data[user]);
+                    $('.divChat').append('<div class="divChatContainer"><img class="img-circle imgProfile" src="'+data[user].userProfile+'"><a href="pvtMsg/'+data[user].userID+'"><h4 style="display: inline-block; margin-left: 10px;">'+data[user].userName+'</h4></a></div>');
+                }
+                $('.divChat').prepend('<center><label for="divChat">Chat</label></center>');
+            },
+            error: function(){
+                console.log('Error');
+            }
+        });
+    });
+    $('.chatWriteMessage form').submit(function (e){
+        e.preventDefault();
+        var formAction = $(this).attr("action");
+
+        $.ajax({
+            method: 'post',
+            url: formAction,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data){
+                console.log(data);
+            },
+            error: function(){
+                console.log('Error');
+            }
+        });
+    });
 });

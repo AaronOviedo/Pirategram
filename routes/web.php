@@ -18,9 +18,11 @@ Route::get('/', function () {
 Route::get('/logout', 'myUserController@logout');
 Route::post('newProfile', 'myUserController@newProfile');
 Route::post('newCover', 'myUserController@newCover');
+Route::post('usersChat', 'myUserController@usersChat');
 
 Route::resource('myUser', 'myUserController');
 Route::get('/home', 'HomeController@index');
 Route::resource('newPost', 'PublicationController');
 Route::resource('profile', 'ProfileController');
 Route::resource('search', 'SearchController');
+Route::resource('pvtMsg', 'PvtMsgController');

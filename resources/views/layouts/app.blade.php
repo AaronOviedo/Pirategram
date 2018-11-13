@@ -7,6 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="userID" content="{{$_SESSION['userID']}}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -34,7 +35,7 @@
     @endphp
     @if ($user != false)
     <div id="app">
-        <nav class="navbar navbar-light" style="background-color: #e3e7fd;">
+        <nav class="navbar navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -109,6 +110,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <div class="divChat">
+            <!-- Chat code with AJAX -->
+        </div>
     </div>
     @else
         <script>window.location = "/";</script>

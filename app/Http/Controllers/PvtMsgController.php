@@ -3,6 +3,8 @@
 namespace Pirategram\Http\Controllers;
 
 use Pirategram\PvtMsg;
+use Pirategram\myUser;
+use Pirategram\Multimedia;
 use Illuminate\Http\Request;
 
 class PvtMsgController extends Controller
@@ -14,7 +16,7 @@ class PvtMsgController extends Controller
      */
     public function index()
     {
-        //
+        return View('pvtMsg');
     }
 
     /**
@@ -24,7 +26,7 @@ class PvtMsgController extends Controller
      */
     public function create()
     {
-        //
+        dd('Hola');
     }
 
     /**
@@ -35,7 +37,7 @@ class PvtMsgController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -44,9 +46,11 @@ class PvtMsgController extends Controller
      * @param  \Pirategram\PvtMsg  $pvtMsg
      * @return \Illuminate\Http\Response
      */
-    public function show(PvtMsg $pvtMsg)
+    public function show($pvtMsg)
     {
-        //
+        $userReceiver = myUser::find($pvtMsg);
+
+        return redirect('pvtMsg')->with('receiver', $userReceiver);
     }
 
     /**

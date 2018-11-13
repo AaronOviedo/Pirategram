@@ -67,6 +67,9 @@ textarea{
     margin:5%; 
     background-color: #e3e7fd;
 }
+nav.navbar{
+    background-color: #e3e7fd;
+}
 img.PP{
     height:50px; 
     width:50px;
@@ -139,4 +142,56 @@ p.like{
 .hideInput:focus + label,
 .hideInput + label:hover {
     background-color: yellowgreen;
+}
+
+main{
+    display: inline-block;
+    width: 70%;
+}
+
+.divChat{
+    float: right;
+    padding-right: 25px;
+    /* width: 30%; */
+}
+.divChatContainer{
+    padding: 5px;
+    border: bold, gainsboro, 3px;
+}
+.divChatContainer:hover{
+    opacity: .3;
+}   
+#chatMsg{
+    float: left;
+    padding-right: 4px;
+    margin-left: 15px;
+}
+#chatSubmit{
+    float: right;
+    margin-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.chat input{
+    width: 90%;
+}
+.chatMessages{
+    min-height: 500px;
+}
+.messageReceived{
+    display: block;
+    float: left;
+    margin-left: 15px;
+    border-radius: 5px;
+    background-color: #e3e7fd;
+    padding: 10px;
+}
+
+.messageSend{
+    display: block;
+    float: right;
+    border-radius: 5px;
+    background-color: lightblue;
+    padding: 10px;
+    margin-right: 15px;
 }

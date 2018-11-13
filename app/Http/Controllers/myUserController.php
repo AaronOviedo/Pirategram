@@ -43,31 +43,6 @@ class myUserController extends Controller
      */
     public function store(Request $request)
     {
-        /*$json = json_decode($request->varJSON);
-
-        $gender = $json["gender"];
-        $name = $json["name"];
-        $email = $json["email"];
-        $password = $json["password"];
-        $date = $json["date"];
-
-        if($gender == 1){
-            $gen = 'male';
-        }else if($gender == 2){
-            $gen = 'female';
-        }else{
-            $gen = 'other';
-        }
-
-        $myUser = myUser::create([
-            'strName'               =>  $name,
-            'strEmail'              =>  $email,
-            'strPassword'           =>  $password,
-            'dateBirth'             =>  $date,
-            'strGender'             =>  $gen,
-            'intProfile'            =>  1,
-            'intCover'              =>  0
-        ]);*/
 
         if($request->gender == 1){
             $gen = 'male';
@@ -103,7 +78,7 @@ class myUserController extends Controller
     {
         $myUser = myUser::find($id);
 
-        //dd($myUser);
+        dd($myUser);
         return redirect('profile')->with('userProfile', $myUser);
     }
 
@@ -163,14 +138,17 @@ class myUserController extends Controller
             $newMultimedia = Multimedia::create([
                 'strLink'   =>  'storage/' . $newPath
             ]);
+
+            Storage::disk('public')->delete($user->profile->strLink);
+
+            $user->intProfile = $newMultimedia->id;
+            $user->save();
+            return 'reload';
         }else{
             return response()->json([
                 'message'       =>  $Validator->errors()->all()
             ]);
         }
-        $user->intProfile = $newMultimedia->id;
-        $user->save();
-        return 'reload';
     }
 
     public function newCover(Request $request){
@@ -186,14 +164,31 @@ class myUserController extends Controller
             $newMultimedia = Multimedia::create([
                 'strLink'   =>  'storage/' . $newPath
             ]);
+
+            Storage::disk('public')->delete($user->cover->strLink);
+
+            $user->intCover = $newMultimedia->id;
+            $user->save();
+            return 'reload';
         }else{
             return response()->json([
                 'message'       =>  $Validator->errors()->all()
             ]);
         }
-        $user->intCover = $newMultimedia->id;
-        $user->save();
-        return 'reload';
     }
 
+    public function usersChat(Request $request){
+        $allUsers = myUser::all();
+        $array = array();
+        foreach($allUsers as $singleUser){
+            if($singleUser != $request->id){
+                $tempArray = array();
+                $tempArray['userID'] = $singleUser->id;
+                $tempArray['userName'] = $singleUser->strName;
+                $tempArray['userProfile'] = $singleUser->profile->strLink;
+                array_push($array, $tempArray);
+            }
+        }
+        return $array;
+    }
 }
