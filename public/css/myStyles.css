@@ -179,6 +179,7 @@ main{
     min-height: 500px;
 }
 .messageReceived{
+    clear: both;
     display: block;
     float: left;
     margin-left: 15px;
@@ -188,6 +189,7 @@ main{
 }
 
 .messageSend{
+    clear: both;
     display: block;
     float: right;
     border-radius: 5px;

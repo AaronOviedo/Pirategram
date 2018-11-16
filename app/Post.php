@@ -24,4 +24,8 @@ class Post extends Model
     public function user(){
         return $this->belongsTo('Pirategram\myUser', 'intUserID');
     }
+
+    public function userLikes(){
+        return $this->belongsToMany('Pirategram\myUser', 'relPostLiked', 'intPostID', 'intUserID');
+    }
 }

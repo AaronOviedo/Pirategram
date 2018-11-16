@@ -30,15 +30,42 @@ class myUser extends Model
     }
 
     public function pvtMsg(){
-        return $this->belongsToMany('Pirategram\myUser', 'relPvtMsg', 'id', 'id');
+        return $this->belongsToMany('Pirategram\myUser', 'relPvtMsg', 'intSend', 'intReceive');
     }
 
-    public function follow(){
-        return $this->belongsToMany('Pirategram\myUser', 'relFollow', 'id', 'id');
+    public function userFollows(){
+        return $this->belongsToMany('Pirategram\myUser', 'relFollow', 'intFollower', 'intFollowed');
     }
 
     public function postLiked(){
-        return $this->belongsToMany('Pirategram\Post', 'relPostLiked');
+        return $this->belongsToMany('Pirategram\Post', 'relPostLiked', 'intUserID', 'intPostID');
     }
 
+    public function like($postID){
+        $this->postLiked()->attach($postID);
+        return $this;
+    }
+
+    public function unlike($postID){
+        $this->postLiked()->detach($postID);
+        return $this;
+    }
+
+    public function isLiking($postID){
+        return (boolean) $this->postLiked()->where('intPostID', $postID)->first();
+    }
+
+    public function follow($userID){
+        $this->userFollows()->attach($userID);
+        return $this;
+    }
+
+    public function unfollow($userID){
+        $this->userFollows()->detach($userID);
+        return $this;
+    }
+
+    public function isFollowing($userID){
+        return (boolean) $this->userFollows()->where('intFollowed', $userID)->first();
+    }
 }

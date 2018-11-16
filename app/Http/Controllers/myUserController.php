@@ -8,6 +8,9 @@ use Pirategram\Multimedia;
 use Illuminate\Support\Facades\Input;
 use Storage;
 use Validator;
+use Pirategram\Events\Follow;
+use Pirategram\Events\Like;
+use Pirategram\Events\pvtMsgSend;
 
 class myUserController extends Controller
 {
@@ -190,5 +193,18 @@ class myUserController extends Controller
             }
         }
         return $array;
+    }
+
+    public function follow($user){
+
+    }
+    public function unfollow($user){
+
+    }
+    public function like($user){
+
+    }
+    public function unlike($user){
+
     }
 }

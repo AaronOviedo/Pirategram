@@ -20,3 +20,13 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app'
 });
+
+window.Pusher = require('pusher-js');
+import Echo from "laravel-echo";
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'a305fbfddb8548e2b325',
+    cluster: 'us2',
+    encrypted: true
+});
