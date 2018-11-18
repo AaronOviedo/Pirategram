@@ -9,19 +9,20 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Pirategram\PvtMsg;
+use Pirategram\myUser;
 
-class pvtMsgSend
-{
+class sendPrivateMessage{
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $msg;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
+    public function __construct(PvtMsg $msg){
+        $this->$msg = $msg;
     }
 
     /**
@@ -29,8 +30,7 @@ class pvtMsgSend
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function pvtMsgBroadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+    public function broadcastOn(){
+        return new PrivateChannel('Chat');
     }
 }

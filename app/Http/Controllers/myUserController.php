@@ -8,9 +8,8 @@ use Pirategram\Multimedia;
 use Illuminate\Support\Facades\Input;
 use Storage;
 use Validator;
-use Pirategram\Events\Follow;
-use Pirategram\Events\Like;
-use Pirategram\Events\pvtMsgSend;
+use Pirategram\Events\sendPrivateMessage;
+use Pirategram\PvtMsg;
 
 class myUserController extends Controller
 {
@@ -119,6 +118,8 @@ class myUserController extends Controller
         //
     }
 
+    // PERSONAL FUNCTIONS TO WORK WITH AJAX
+
     // Function to logout
     public function logout(){
         session_start();
@@ -135,7 +136,7 @@ class myUserController extends Controller
         if($Validator->passes()){
             $newProfile = $request->file('newProfile');
             $n =  rand() . '.' . $newProfile->getClientOriginalExtension();
-            $newPath = $newProfile->storeAs('multimedia', $n, 'public');
+            $newPath = $newProfile->storeAs('multimedia', $n, 'files');
             //$newPath = Storage::disk('public')->put('multimedia', $request->postMultimedia);
 
             $newMultimedia = Multimedia::create([
@@ -162,13 +163,13 @@ class myUserController extends Controller
         if($Validator->passes()){
             $newCover = $request->file('newCover');
             $n =  rand() . '.' . $newCover->getClientOriginalExtension();
-            $newPath = $newCover->storeAs('multimedia', $n, 'public');
+            $newPath = $newCover->storeAs('multimedia', $n, 'files');
 
             $newMultimedia = Multimedia::create([
                 'strLink'   =>  'storage/' . $newPath
             ]);
 
-            Storage::disk('public')->delete($user->cover->strLink);
+            Storage::disk('files')->delete($user->cover->strLink);
 
             $user->intCover = $newMultimedia->id;
             $user->save();
@@ -195,16 +196,71 @@ class myUserController extends Controller
         return $array;
     }
 
-    public function follow($user){
-
+    public function follow(Request $request){
+        $user = myUser::find($request->userID);
+        $followedID = $request->followID;  
+        if(!$user->isFollowing($followedID)){
+            $user->follow($followedID);
+            $user->save();
+            return 'Following';
+        }else{
+            return 'You are alredy following this person';
+        }
     }
-    public function unfollow($user){
-
+    public function unfollow(Request $request){
+        $user = myUser::find($request->userID);
+        $followedID = $request->followID;  
+        if($user->isFollowing($followedID)){
+            $user->unfollow($followedID);
+            $user->save();
+            return 'Stop following';
+        }else{
+            return 'You are not following that person';
+        }
     }
-    public function like($user){
+    public function like(Request $request){
 
+        $user = myUser::find($request->userID);
+        $postLikedID = $request->postID;
+        if(!$user->isLiking($postLikedID)){
+            $user->like($postLikedID);
+            $user->save();
+
+            $post = Post::find($postLikedID);
+            $post->intLikes++;
+            $post->save();
+            return 'Like';
+        }else{
+            return 'You alredy liked this post';
+        }
     }
-    public function unlike($user){
+    public function unlike(Request $request){
 
+        $user = myUser::find($request->userID);
+        $postLikedID = $request->postID;
+        if(!$user->isLiking($postLikedID)){
+            $user->unlike($postLikedID);
+            $user->save();
+
+            $post = Post::find($postLikedID);
+            $post->intLikes--;
+            $post->save();
+            return 'Unlike';
+        }else{
+            return 'You are not liking this post';
+        }
+    }
+
+    public function sendMessage(Request $request){
+        //$user = myUser::find($request->sendID);
+        $message = PvtMsg::create([ 
+            'intReceive'        => $request->receiverID,
+            'intSend'           => $request->sendID,
+            'strMessage'        => $request->chatMsg
+        ]);
+
+        broadcast(new sendPrivateMessage($message));
+
+        return ['status' => 'Message sent'];
     }
 }

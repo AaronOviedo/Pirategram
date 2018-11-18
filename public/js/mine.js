@@ -3,6 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+window.Pusher = require('pusher-js');
+import Echo from "laravel-echo";
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'a305fbfddb8548e2b325',
+    cluster: 'us2',
+    encrypted: true
+});
 
 $(document).ready(function(){
     $("#btnPosts").click(function(){
@@ -31,6 +40,20 @@ $(document).ready(function(){
         $("#gallery").hide();
         $("#usersFollowers").hide();
         $("#usersFollowing").show();
+    });
+
+    //Listening to the broadcast Chat
+    Echo.private('Chat').listen('sendPrivateMessage', (message) => {
+        var id = $('meta[name="userID"]').attr('content');
+        var divMessages = $('.chatMessages');
+        var msg;
+        if(message.intSend == id){
+            msg = '<div class="messageSend">'
+        }else if(message.intReceive == id){
+            msg = '<div class="messageReceived">'
+        }
+        var finalMsg = msg + message.strMessage + '</div>';
+        divMessages.append(finalMsg);
     });
 
     $("#formNewPost").submit(function(e){
@@ -145,6 +168,7 @@ $(document).ready(function(){
             }
         });
     });
+
     $('.chatWriteMessage form').submit(function (e){
         e.preventDefault();
         var formAction = $(this).attr("action");
@@ -165,4 +189,10 @@ $(document).ready(function(){
             }
         });
     });
+
+    //AJAX for like
+
+
+    //AJAX for follow
+    
 });

@@ -20,17 +20,18 @@
     </div>
     </center>
     <div class="chatMessages chat">
-        <!-- Take all the messages with AJAX -->
+        <!-- Take all the messages with AJAX 
         <div class="messageSend">
             Hello
         </div>
         <div class="messageReceived">
             Hi!
-        </div>
+        </div> -->
     </div>
     <div class="chatWriteMessage chat">
-        <form action="/pvtMsg" method="post">
+        <form action="/sendMessage" method="post">
             {{ csrf_field() }}
+            <input type="hidden" name="sendID" id="sendID" value="{{$_SESSION['userID']}}">
             <input type="hidden" name="receiverID" id="receiverID" value="{{$receiver->id}}">
             <input type="text" name="chatMsg" id="chatMsg" class="form-control" placeholder="Write your message..." required>
             <button type="submit" id="chatSubmit" class="btn btn-primary">Send</button>

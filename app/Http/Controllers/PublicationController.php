@@ -46,11 +46,12 @@ class PublicationController extends Controller
         if($Validator->passes()){
             $postMultimedia = $request->file('postMultimedia');
             $n =  rand() . '.' . $postMultimedia->getClientOriginalExtension();
-            $newPath = $postMultimedia->storeAs('multimedia', $n, 'public');
+            $newPath = $postMultimedia->storeAs('multimedia', $n, 'files');
             //$newPath = Storage::disk('public')->put('multimedia', $request->postMultimedia);
 
             $newMultimedia = Multimedia::create([
-                'strLink'   =>  'storage/' . $newPath
+                //'strLink'   =>  'storage/' . $newPath
+                'strLink'   =>  $newPath
             ]);
         }else{
             return response()->json([

@@ -13,6 +13,7 @@ class myUser extends Model
 
     protected $table = 'catUser';
     
+    //Relations
     public function cover(){
         return $this->belongsTo('Pirategram\Multimedia', 'intCover');
     }
@@ -29,8 +30,13 @@ class myUser extends Model
         return $this->hasMany('Pirategram\Post', 'id');
     }
 
-    public function pvtMsg(){
+    public function messageReceived(){
         return $this->belongsToMany('Pirategram\myUser', 'relPvtMsg', 'intSend', 'intReceive');
+    }
+
+    //If maybe some time i'm gonna need the messages sended alone, but now, it's useless
+    public function messageSend(){
+        return $this->belongsToMany('Pirategram\myUser', 'relPvtMsg', 'intReceive', 'intSend');
     }
 
     public function userFollows(){
@@ -41,6 +47,7 @@ class myUser extends Model
         return $this->belongsToMany('Pirategram\Post', 'relPostLiked', 'intUserID', 'intPostID');
     }
 
+    //Like functions
     public function like($postID){
         $this->postLiked()->attach($postID);
         return $this;
@@ -55,6 +62,7 @@ class myUser extends Model
         return (boolean) $this->postLiked()->where('intPostID', $postID)->first();
     }
 
+    //Follow functions
     public function follow($userID){
         $this->userFollows()->attach($userID);
         return $this;

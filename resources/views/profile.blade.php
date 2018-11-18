@@ -29,7 +29,7 @@
                         min-width: 50px; min-height: 50px;">
                 @if(session('userProfile'))    
                     <!-- This button is for follow the user -->
-                    <button data-idusuarioperfil="{{$user->id}}" class="btn btn-default follow btnLeftPad" data-action="unfollow">Follow</button>
+                    <button followID="{{$user->id}}" class="btn btn-default follow btnLeftPad" data-action="unfollow">Follow</button>
                 @else
                     <!-- This button is for change Profile Picture (if the profile is ours) -->
                     <input type="file" name="profile" id="profile" class="hideInput">
@@ -78,61 +78,59 @@
                         </div>
                     </div>
                 </div>
-                
+            @endforeach 
             
-                <div class="modal fade" id="modalComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel">Comments</h4>
-                                <div class="modal-body">
-                                    <form method="post" action="comment" >                
-                                        <input type="hidden" name="idUsuario" value="intUserID">
-                                        <input type="hidden" name="idPublicacion" id="idPublicacionHidden">
-                                        <input type="hidden" name="action" value="createComment">
-                                        <input type="hidden" name="place" value="home">
-                                        <div class="form-group">
-                                            <label for="contenidoComentario" style="display: block;">Comment: </label>
-                                            <textarea id="contenidoComentario" name="contenidoComentario" placeholder="New comment..." required></textarea>
-                                        </div>
-                                        <center>
-                                            <button type="submit" class="btn btn-primary" align="center" id="publicarComentario">Post comment</button>
-                                        </center>
-                                    </form>
-                                </div>
+            <div class="modal fade" id="modalComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Comments</h4>
+                            <div class="modal-body">
+                                <form method="post" action="comment" >                
+                                    <input type="hidden" name="idUsuario" value="intUserID">
+                                    <input type="hidden" name="idPublicacion" id="idPublicacionHidden">
+                                    <input type="hidden" name="action" value="createComment">
+                                    <input type="hidden" name="place" value="home">
+                                    <div class="form-group">
+                                        <label for="contenidoComentario" style="display: block;">Comment: </label>
+                                        <textarea id="contenidoComentario" name="contenidoComentario" placeholder="New comment..." required></textarea>
+                                    </div>
+                                    <center>
+                                        <button type="submit" class="btn btn-primary" align="center" id="publicarComentario">Post comment</button>
+                                    </center>
+                                </form>
                             </div>
-                            <div class="modal-body" id="contenedorComentarios">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+                        </div>
+                        <div class="modal-body" id="contenedorComentarios">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal fade" id="modalImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel">Galery</h4>
+            <div class="modal fade" id="modalImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Galery</h4>
+                        </div>
+                            <div class="modal-body">
+                                <img class="imgModalGallery">
                             </div>
-                                <div class="modal-body">
-                                    <img class="imgModalGallery">
-                                </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
-
-            @endforeach
+            </div>
         </div>
     </div>
 @endsection

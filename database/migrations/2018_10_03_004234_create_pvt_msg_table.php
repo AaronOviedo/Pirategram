@@ -18,6 +18,7 @@ class CreatePvtMsgTable extends Migration
 
             $table->integer('intReceive');  //User who receive the private message
             $table->integer('intSend');     //User who send the private message
+            $table->string('strMessage');
 
             $table->timestamps();
         });
