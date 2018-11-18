@@ -11,8 +11,12 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+// Broadcast::channel('App.User.{id}', function ($user, $id) {
+//     return (int) $user->id === (int) $id;
+// });
+
+Broadcast::channel('privateMsg', function ($user, $id) {
+    return true;
 });
 
 Broadcast::channel('Chat', function ($user, $id){

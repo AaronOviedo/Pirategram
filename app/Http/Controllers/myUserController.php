@@ -11,6 +11,7 @@ use Storage;
 use Validator;
 use Pirategram\Events\sendPrivateMessage;
 use Pirategram\PvtMsg;
+use Pirategram\Events\Msg;
 
 class myUserController extends Controller
 {
@@ -266,9 +267,9 @@ class myUserController extends Controller
             'strMessage'        => $request->chatMsg
         ]);
 
-        event(new sendPrivateMessage($message));
+        event(new Msg('This is a new message'));
 
-        //return ['status' => 'Message sent'];
-        return $message;
+        return ['status' => 'Message sent'];
+        //return $message;
     }
 }

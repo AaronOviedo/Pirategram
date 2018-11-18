@@ -33,6 +33,12 @@ $(document).ready(function(){
         $("#usersFollowing").show();
     });
 
+    //Pusher.logToConsole = true;
+
+    Echo.channel('privateMsg').listen('Msg', (e) => {
+        console.log('Helloooo' + e.message);
+    });
+
     // ALL AJAX FUNCTIONS
     $("#formNewPost").submit(function(e){
         e.preventDefault();

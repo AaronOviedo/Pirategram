@@ -20,9 +20,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app',
     created(){
-        Echo.channel('Chat').listen('sendPrivateMessage', (e) => {
-            console.log('Helloooo');
-        });
+
     }
 });
 
