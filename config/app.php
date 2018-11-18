@@ -158,7 +158,7 @@ return [
          */
         Pirategram\Providers\AppServiceProvider::class,
         Pirategram\Providers\AuthServiceProvider::class,
-        // Pirategram\Providers\BroadcastServiceProvider::class,
+        Pirategram\Providers\BroadcastServiceProvider::class,
         Pirategram\Providers\EventServiceProvider::class,
         Pirategram\Providers\RouteServiceProvider::class,
 

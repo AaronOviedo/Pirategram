@@ -18,27 +18,33 @@
         $posts = Pirategram\Post::orderBy('updated_at')->get();
         //$posts = Pirategram\Post::where('intUserID', '=', $singleUser->id)->orderBy('updated_at', 'desc')->get();
     @endphp
-        @foreach ($posts->reverse() as $singlePost)
-            <div class="well divPost">
-                <div>
-                    <img class="img-circle imgProfile" src="{{$singlePost->user->profile->strLink}}">
-                    <a href="/myUser/{{$singlePost->user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singlePost->user->strName}}</h4></a>
-                </div>
-                <div>
-                    <h3>{{$singlePost->strTitle}}</h3>
-                    <h4>{{$singlePost->strDescription}}</h4>
+        @if($posts)
+            @foreach ($posts->reverse() as $singlePost)
+                <div class="well divPost">
                     <div>
-                        <img data-toggle="modal" data-target="#modalImg" class="imgGaleria imgWidth"
-                        src="{{$singlePost->multimedia->strLink}}">
+                        <img class="img-circle imgProfile" src="{{$singlePost->user->profile->strLink}}">
+                        <a href="/myUser/{{$singlePost->user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singlePost->user->strName}}</h4></a>
                     </div>
                     <div>
-                        <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="false">LIKE</button>
-                        <label class="like" id="intPostID">Likes: <span>{{$singlePost->intLikes}} </span></label>
-                        <button id="comments-intPostID" type="button" data-postID="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
+                        <h3>{{$singlePost->strTitle}}</h3>
+                        <h4>{{$singlePost->strDescription}}</h4>
+                        <div>
+                            <img data-toggle="modal" data-target="#modalImg" class="imgGaleria imgWidth"
+                            src="{{$singlePost->multimedia->strLink}}">
+                        </div>
+                        <div>
+                            @if (!$user->isLiking($singlePost->id))
+                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="true">LIKE</button>                                
+                            @else
+                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-warning like" data-liked="false">LIKE</button>                                
+                            @endif
+                            <label class="like" id="intPostID">Likes: <span>{{$singlePost->intLikes}} </span></label>
+                            <button id="comments-intPostID" type="button" data-postID="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endforeach 
+            @endforeach 
+        @endif
 
         <div class="modal fade" id="modalComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

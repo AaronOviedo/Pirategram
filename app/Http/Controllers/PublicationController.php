@@ -51,7 +51,7 @@ class PublicationController extends Controller
 
             $newMultimedia = Multimedia::create([
                 //'strLink'   =>  'storage/' . $newPath
-                'strLink'   =>  $newPath
+                'strLink'   =>  'files/' . $newPath
             ]);
         }else{
             return response()->json([

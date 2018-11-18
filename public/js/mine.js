@@ -3,17 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-window.Pusher = require('pusher-js');
-import Echo from "laravel-echo";
-
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: 'a305fbfddb8548e2b325',
-    cluster: 'us2',
-    encrypted: true
-});
-
 $(document).ready(function(){
+    
     $("#btnPosts").click(function(){
         $("#gallery").hide();
         $("#usersFollowers").hide();
@@ -40,20 +31,6 @@ $(document).ready(function(){
         $("#gallery").hide();
         $("#usersFollowers").hide();
         $("#usersFollowing").show();
-    });
-
-    //Listening to the broadcast Chat
-    Echo.private('Chat').listen('sendPrivateMessage', (message) => {
-        var id = $('meta[name="userID"]').attr('content');
-        var divMessages = $('.chatMessages');
-        var msg;
-        if(message.intSend == id){
-            msg = '<div class="messageSend">'
-        }else if(message.intReceive == id){
-            msg = '<div class="messageReceived">'
-        }
-        var finalMsg = msg + message.strMessage + '</div>';
-        divMessages.append(finalMsg);
     });
 
     // ALL AJAX FUNCTIONS
@@ -159,7 +136,6 @@ $(document).ready(function(){
                 //console.log(message);
                 for(var user in data){
                     if(!data.hasOwnProperty(user)) continue;
-                    console.log(data[user]);
                     $('.divChat').append('<div class="divChatContainer"><img class="img-circle imgProfile" src="'+data[user].userProfile+'"><a href="pvtMsg/'+data[user].userID+'"><h4 style="display: inline-block; margin-left: 10px;">'+data[user].userName+'</h4></a></div>');
                 }
                 $('.divChat').prepend('<center><label for="divChat">Chat</label></center>');
@@ -192,7 +168,7 @@ $(document).ready(function(){
     });
 
     //AJAX for follow
-    $('button.follow').click( () => {
+    $('button.follow').click( function(){
         var btnFollow = $(this);
         var id = $('meta[name="userID"]').attr('content');
         if(btnFollow.attr('data-action') == 'follow'){
@@ -203,7 +179,7 @@ $(document).ready(function(){
                     userID:     id,
                     followID:   btnFollow.attr('followID'),
                 },
-                success: (e) =>{
+                success: function(e){
                     console.log(e.status);
                     btnFollow.attr('data-action', 'unfollow');
                     btnFollow.removeClass('btn-default');
@@ -218,7 +194,7 @@ $(document).ready(function(){
                     userID:     id,
                     followID:   btnFollow.attr('followID'),
                 },
-                success: (e) =>{
+                success: function(e){
                     console.log(e.status);
                     btnFollow.attr('data-action', 'follow');
                     btnFollow.removeClass('btn-warning');
@@ -229,7 +205,7 @@ $(document).ready(function(){
     });
 
     //AJAX for like
-    $('button.like').click( () => {
+    $('button.like').click( function(){
         var btnLike = $(this);
         var id = btnLike.attr('data-userID');
         var post = btnLike.attr('data-postID');
@@ -241,7 +217,7 @@ $(document).ready(function(){
                     userID:     id,
                     postID:     post,
                 },
-                success: (e) =>{
+                success: function(e){
                     console.log(e.status);
                     btnLike.attr('data-liked', 'false');
                     btnLike.removeClass('btn-default');
@@ -258,13 +234,14 @@ $(document).ready(function(){
                     userID:     id,
                     postID:     post,
                 },
-                success: (e) =>{
+                success: function(e){
                     console.log(e.status);
-                    btnLike.attr('data-action', 'true');
+                    btnLike.attr('data-liked', 'true');
                     btnLike.removeClass('btn-warning');
                     btnLike.addClass('btn-default');
 
-                    $('label.like span').empty().append(e.intLikes);
+                    $('label.like span').empty();
+                    $('label.like span').append(e.intLikes);
                 }
             });
         }

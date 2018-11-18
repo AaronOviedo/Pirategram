@@ -66,8 +66,7 @@ return [
 
         'files' => [
             'driver'    => 'local',
-            'root'      =>  storage_path('app/files'),
-            'visibility' => 'public',
+            'root'      => 'files',
         ]
 
     ],

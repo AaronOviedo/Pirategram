@@ -18,5 +18,25 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    created(){
+        Echo.channel('Chat').listen('sendPrivateMessage', (e) => {
+            console.log('Helloooo');
+        });
+    }
 });
+
+//Listening to the broadcast Chat
+// Echo.private('Chat').listen('sendPrivateMessage', (message) => {
+//     var id = $('meta[name="userID"]').attr('content');
+//     var divMessages = $('.chatMessages');
+//     var msg;
+//     if(message.intSend == id){
+//         msg = '<div class="messageSend">'
+//     }else if(message.intReceive == id){
+//         msg = '<div class="messageReceived">'
+//     }
+//     var finalMsg = msg + message.strMessage + '</div>';
+//     divMessages.append(finalMsg);
+// });
+

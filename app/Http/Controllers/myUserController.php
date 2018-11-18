@@ -5,6 +5,7 @@ namespace Pirategram\Http\Controllers;
 use Illuminate\Http\Request;
 use Pirategram\myUser;
 use Pirategram\Multimedia;
+use Pirategram\Post;
 use Illuminate\Support\Facades\Input;
 use Storage;
 use Validator;
@@ -140,7 +141,7 @@ class myUserController extends Controller
             //$newPath = Storage::disk('public')->put('multimedia', $request->postMultimedia);
 
             $newMultimedia = Multimedia::create([
-                'strLink'   =>  'storage/' . $newPath
+                'strLink'   =>  'files/' . $newPath
             ]);
 
             Storage::disk('public')->delete($user->profile->strLink);
@@ -166,7 +167,7 @@ class myUserController extends Controller
             $newPath = $newCover->storeAs('multimedia', $n, 'files');
 
             $newMultimedia = Multimedia::create([
-                'strLink'   =>  'storage/' . $newPath
+                'strLink'   =>  'files/' . $newPath
             ]);
 
             Storage::disk('files')->delete($user->cover->strLink);
@@ -241,7 +242,7 @@ class myUserController extends Controller
 
         $user = myUser::find($request->userID);
         $postLikedID = $request->postID;
-        if(!$user->isLiking($postLikedID)){
+        if($user->isLiking($postLikedID)){
             $user->unlike($postLikedID);
             $user->save();
 
@@ -265,8 +266,9 @@ class myUserController extends Controller
             'strMessage'        => $request->chatMsg
         ]);
 
-        broadcast(new sendPrivateMessage($message));
+        event(new sendPrivateMessage($message));
 
-        return ['status' => 'Message sent'];
+        //return ['status' => 'Message sent'];
+        return $message;
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Pirategram\PvtMsg;
 use Pirategram\myUser;
 
-class sendPrivateMessage{
+class sendPrivateMessage implements ShouldBroadcast{
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $msg;
 
@@ -31,6 +31,12 @@ class sendPrivateMessage{
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn(){
-        return new PrivateChannel('Chat');
+        return new Channel('Chat');
     }
+    
+    /*
+    public function join(){
+
+    }
+    */
 }

@@ -56,6 +56,7 @@
 
         <div id='posts' class='postContainer'>
             @php
+                $userOnline = Pirategram\myUser::find($_SESSION['userID']);
                 $posts = Pirategram\Post::where('intUserID', '=', $user->id)->orderBy('updated_at', 'desc')->get();
             @endphp
             @foreach ($posts as $singlePost)
@@ -72,7 +73,11 @@
                             src="{{$singlePost->multimedia->strLink}}">
                         </div>
                         <div>
-                            <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default like" data-liked="true" >LIKE</button>
+                            @if (!$userOnline->isLiking($singlePost->id))
+                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="true">LIKE</button>                                
+                            @else
+                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-warning like" data-liked="false">LIKE</button>                                
+                            @endif
                             <label class="like" id="{{$singlePost->id}}">Likes: <span>{{$singlePost->intLikes}}</span></label>
                             <button id="comments-intPostID" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
                         </div>
