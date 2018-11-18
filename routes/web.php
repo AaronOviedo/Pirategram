@@ -19,10 +19,10 @@ Route::get('/logout', 'myUserController@logout');
 Route::post('newProfile', 'myUserController@newProfile');
 Route::post('newCover', 'myUserController@newCover');
 Route::post('usersChat', 'myUserController@usersChat');
-Route::post('like', 'myUserController@like');
-Route::post('unlike', 'myUserController@unlike');
-Route::post('follow', 'myUserController@follow');
-Route::post('unfollow', 'myUserController@unfollow');
+Route::get('like', 'myUserController@like');
+Route::get('unlike', 'myUserController@unlike');
+Route::get('follow', 'myUserController@follow');
+Route::get('unfollow', 'myUserController@unfollow');
 Route::post('sendMessage', 'myUserController@sendMessage');
 
 //Restful routes

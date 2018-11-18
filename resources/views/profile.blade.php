@@ -29,7 +29,7 @@
                         min-width: 50px; min-height: 50px;">
                 @if(session('userProfile'))    
                     <!-- This button is for follow the user -->
-                    <button followID="{{$user->id}}" class="btn btn-default follow btnLeftPad" data-action="unfollow">Follow</button>
+                    <button followID="{{$user->id}}" class="btn btn-default follow btnLeftPad" data-action="follow">Follow</button>
                 @else
                     <!-- This button is for change Profile Picture (if the profile is ours) -->
                     <input type="file" name="profile" id="profile" class="hideInput">
@@ -73,7 +73,7 @@
                         </div>
                         <div>
                             <button data-idusuario="{{$user->id}}" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default like" data-liked="true" >LIKE</button>
-                            <p class="like" id="{{$singlePost->id}}">Likes: {{$singlePost->intLikes}}</p>
+                            <label class="like" id="{{$singlePost->id}}">Likes: <span>{{$singlePost->intLikes}}</span></label>
                             <button id="comments-intPostID" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="modal-body" id="contenedorComentarios">
+                        <div class="modal-body">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

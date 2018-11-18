@@ -56,6 +56,7 @@ $(document).ready(function(){
         divMessages.append(finalMsg);
     });
 
+    // ALL AJAX FUNCTIONS
     $("#formNewPost").submit(function(e){
         e.preventDefault();
         var formAction = $(this).attr("action");
@@ -190,9 +191,82 @@ $(document).ready(function(){
         });
     });
 
-    //AJAX for like
-
-
     //AJAX for follow
-    
+    $('button.follow').click( () => {
+        var btnFollow = $(this);
+        var id = $('meta[name="userID"]').attr('content');
+        if(btnFollow.attr('data-action') == 'follow'){
+            $.ajax({
+                method: 'get',
+                url: 'follow',
+                data: {
+                    userID:     id,
+                    followID:   btnFollow.attr('followID'),
+                },
+                success: (e) =>{
+                    console.log(e.status);
+                    btnFollow.attr('data-action', 'unfollow');
+                    btnFollow.removeClass('btn-default');
+                    btnFollow.addClass('btn-warning');
+                }
+            });
+        }else if (btnFollow.attr('data-action') == 'unfollow'){
+            $.ajax({
+                method: 'get',
+                url: 'unfollow',
+                data: {
+                    userID:     id,
+                    followID:   btnFollow.attr('followID'),
+                },
+                success: (e) =>{
+                    console.log(e.status);
+                    btnFollow.attr('data-action', 'follow');
+                    btnFollow.removeClass('btn-warning');
+                    btnFollow.addClass('btn-default');
+                }
+            });
+        }
+    });
+
+    //AJAX for like
+    $('button.like').click( () => {
+        var btnLike = $(this);
+        var id = btnLike.attr('data-userID');
+        var post = btnLike.attr('data-postID');
+        if(btnLike.attr('data-liked') == 'true'){
+            $.ajax({
+                method: 'get',
+                url: 'like',
+                data: {
+                    userID:     id,
+                    postID:     post,
+                },
+                success: (e) =>{
+                    console.log(e.status);
+                    btnLike.attr('data-liked', 'false');
+                    btnLike.removeClass('btn-default');
+                    btnLike.addClass('btn-warning');
+                    
+                    $('label.like span').empty().append(e.intLikes);
+                }
+            });
+        }else if (btnLike.attr('data-liked') == 'false'){
+            $.ajax({
+                method: 'get',
+                url: 'unlike',
+                data: {
+                    userID:     id,
+                    postID:     post,
+                },
+                success: (e) =>{
+                    console.log(e.status);
+                    btnLike.attr('data-action', 'true');
+                    btnLike.removeClass('btn-warning');
+                    btnLike.addClass('btn-default');
+
+                    $('label.like span').empty().append(e.intLikes);
+                }
+            });
+        }
+    });
 });

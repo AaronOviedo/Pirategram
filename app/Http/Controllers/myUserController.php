@@ -202,9 +202,9 @@ class myUserController extends Controller
         if(!$user->isFollowing($followedID)){
             $user->follow($followedID);
             $user->save();
-            return 'Following';
+            return['status' => 'updated'];
         }else{
-            return 'You are alredy following this person';
+            return['status' => 'failed'];
         }
     }
     public function unfollow(Request $request){
@@ -213,9 +213,9 @@ class myUserController extends Controller
         if($user->isFollowing($followedID)){
             $user->unfollow($followedID);
             $user->save();
-            return 'Stop following';
+            return['status' => 'updated'];
         }else{
-            return 'You are not following that person';
+            return['status' => 'failed'];
         }
     }
     public function like(Request $request){
@@ -229,9 +229,12 @@ class myUserController extends Controller
             $post = Post::find($postLikedID);
             $post->intLikes++;
             $post->save();
-            return 'Like';
+            return [
+                'status'    => 'uptaded',
+                'intLikes'  => $post->intLikes,
+            ];
         }else{
-            return 'You alredy liked this post';
+            return['status' => 'failed'];
         }
     }
     public function unlike(Request $request){
@@ -245,9 +248,12 @@ class myUserController extends Controller
             $post = Post::find($postLikedID);
             $post->intLikes--;
             $post->save();
-            return 'Unlike';
+            return [
+                'status'    => 'uptaded',
+                'intLikes'  => $post->intLikes,
+            ];
         }else{
-            return 'You are not liking this post';
+            return['status' => 'failed'];
         }
     }
 
