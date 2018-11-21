@@ -42,7 +42,7 @@
                             @else
                                 <button data-userID="{{$user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="false">LIKE</button>                                
                             @endif
-                            <label class="like" id="intPostID">Likes: <span>{{$singlePost->intLikes}} </span></label>
+                            <label class="like" id="intPostID">Likes: <span data-spanPostID="{{$singlePost->id}}">{{$singlePost->intLikes}} </span></label>
                             <button type="button" data-postID="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                             <input type="hidden" name="modalDeletePostID" id="modalDeletePostID">
                         </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btnDelete" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-danger" id="deletePost" data-dismiss="modal">Delete</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
@@ -132,23 +132,25 @@
                         </button>
                         <h4 class="modal-title" id="myModalLabel">Edit post</h4>
                         <div class="modal-body">
-                            <form method="post" action="editPost" class="editPost" enctype="multipart/form-data">    
+                            <form method="post" action="editPost" class="editPostForm">    
                                 {{ csrf_field() }}                
-                                <input type="hidden" name="modalEditPostID">
+                                <input type="hidden" name="modalEditPostID" id="modalEditPostID">
                                 <div class="form-group">
                                     <label for="tituloPublicacion" >Post title</label>
-                                    <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Título" required>
+                                    <input id="editPostTitle" name="editPostTitle" type="text" class="form-control" placeholder="Título" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="contenidoPublicacion" style="display: block;">Post content</label>
-                                    <textarea id="postContent" name="postContent" placeholder="Content..." required></textarea>
+                                    <textarea id="editPostContent" name="editPostContent" placeholder="Content..." required></textarea>
                                 </div>
+                                <!--
                                 <div class="form-group">
-                                    <input type="file" id="postMultimedia" name="postMultimedia" class="form-control hideInput" required>
-                                    <label for="postMultimedia" class="btn btn-default btnLeftPad">Multimedia</label>
+                                    <input type="file" id="editPostMultimedia" name="editPostMultimedia" class="form-control hideInput" required>
+                                    <label for="editPostMultimedia" class="btn btn-default btnLeftPad">Multimedia</label>
                                 </div>
+                                -->
                                 <center>
-                                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Edit</button>
+                                    <button type="submit" class="btn btn-primary">Edit</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 </center>
                             </form>

@@ -321,10 +321,11 @@ $(document).ready(function(){
     });
 
     //AJAX for like
-    $('button.like').click( function(){
+    $('button.like').click(function(){
         var btnLike = $(this);
         var id = btnLike.attr('data-userID');
         var post = btnLike.attr('data-postID');
+        var spanPostID = $('label.like span').attr('data-spanPostID');
         if(btnLike.attr('data-liked') == 'true'){
             $.ajax({
                 method: 'get',
@@ -342,8 +343,9 @@ $(document).ready(function(){
                         btnLike.attr('data-liked', 'false');
                         btnLike.removeClass('btn-info');
                         btnLike.addClass('btn-default');
-                        
-                        $('label.like span').empty().append(e.intLikes);
+                        if(post == spanPostID){
+                            $('label.like span').empty().append(e.intLikes);
+                        }
                     }
                 }
             });
