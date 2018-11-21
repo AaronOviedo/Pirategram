@@ -3,6 +3,8 @@
 namespace Pirategram\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Pirategram\myUser;
+use Pirategram\Post;
 
 class SearchController extends Controller
 {
@@ -11,9 +13,21 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('search');
+    public function index(Request $request){
+        // $searchInput = $request->searchID;
+
+        // $users = myUser::where('strName', 'like', '%'.$searchInput.'%')
+        //                 ->orWhere('strEmail', 'like', '%'.$searchInput.'%');
+
+        // $posts = Post::where('strTitle', 'like', '%'.$searchInput.'%')
+        //                 ->orWhere('strDescription', 'like', '%'.$searchInput.'%');
+
+        // return redirect('search')->with([
+        //     'allUsers' => $users,
+        //     'allPost' => $posts
+        //     ]);
+        //return redirect('search')->with('allUsers', $users)->with('allPost', $posts);
+        return redirect('search');
     }
 
     /**
@@ -34,7 +48,18 @@ class SearchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $searchInput = $request->searchID;
+
+        $users = myUser::where('strName', 'like', '%'.$searchInput.'%')
+                        ->orWhere('strEmail', 'like', '%'.$searchInput.'%');
+
+        $posts = Post::where('strTitle', 'like', '%'.$searchInput.'%')
+                        ->orWhere('strDescription', 'like', '%'.$searchInput.'%');
+
+        return redirect('search')->with([
+            'allUsers' => $users,
+            'allPost' => $posts
+            ]);
     }
 
     /**

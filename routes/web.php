@@ -25,11 +25,16 @@ Route::get('follow', 'myUserController@follow');
 Route::get('unfollow', 'myUserController@unfollow');
 Route::post('sendMessage', 'myUserController@sendMessage');
 Route::post('fetchMessages', 'myUserController@fetchMessages');
+Route::get('fetchComments', 'PublicationController@fetchComments');
+Route::post('storeComment', 'PublicationController@storeComment');
+Route::post('deletePost', 'PublicationController@deletePost');
+Route::post('editPost', 'PublicationController@editPost');
+Route::get('editPostValues', 'PublicationController@editPostValues');
 
 //Restful routes
 Route::resource('myUser', 'myUserController');
 Route::get('/home', 'HomeController@index');
 Route::resource('newPost', 'PublicationController');
 Route::resource('profile', 'ProfileController');
-Route::resource('search', 'SearchController');
+Route::get('search', 'SearchController@index');
 Route::resource('pvtMsg', 'PvtMsgController');

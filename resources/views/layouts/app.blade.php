@@ -58,8 +58,9 @@
                             <li class="active"><a href="#newPostModal" data-toggle="modal" data-target="#newPostModal">New Post</a></li>
                         </ul>
                         <form class="navbar-form navbar-left" role="search" action="search" method="get">
+                            {{ csrf_field() }}
                             <div class="form-group">
-                                <input type="text" class="form-control" name="textoBusqueda" placeholder="Search" required title='This field is required'>
+                                <input type="text" class="form-control" name="searchID" id="searchID" placeholder="Search" required title='This field is required'>
                             </div>
                             <button type="submit" class="btn btn-default">Search</button>
                         </form>

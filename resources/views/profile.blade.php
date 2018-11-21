@@ -21,9 +21,7 @@
 @endif
     <div class="container postDiv">
         <span id="spanUserID" data-value="{{$user->id}}"></span>
-        <div class="jumbotron" style=" padding-left: 10px;  width: 92.5%; margin: 20px auto;
-        background-image: url({{$user->cover->strLink}}); background-repeat: no-repeat;
-        background-size: 100% 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+        <div class="jumbotron coverDiv" style="background-image: url({{$user->cover->strLink}});">
             <div style="display: inline-block; max-width: 200px; max-height: 200px; min-width: 50px; min-height: 50px;">
                 <img data-toggle="modal" data-target="#modalImg" src="{{$user->profile->strLink}}"  class="img-circle imgGaleria" style=" max-width: 200px; max-height: 200px; 
                         min-width: 50px; min-height: 50px;">
@@ -48,11 +46,6 @@
                 <h5>{{$user->strGender}}</h5>
             </div>
         </div>
-        <div style="width: 50%;">
-            <button id="btnPosts" class="btn btn-primary" style="margin-top:10px;">Posts</button>
-            <button id="btnGallery" class="btn btn-primary" style="margin-top:10px;">Galery</button>
-            <button id="btnUsersFollowers" class="btn btn-primary" style="margin-top:10px;">Users who he follow</button>
-        </div>
 
         <div id='posts' class='postContainer'>
             @php
@@ -64,6 +57,9 @@
                     <div>
                         <img class="img-circle imgProfile" src="{{$user->profile->strLink}}">
                         <a href="/myUser/{{$user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$user->strName}}</h4></a>
+
+                        <button class="btn btn-danger pull-right" style="margin-left: 10px;"  data-postID="{{$singlePost->id}}" data-toggle="modal" data-target="#modalDelete">Delete</button>
+                        <button class="btn btn-warning pull-right" data-postID="{{$singlePost->id}}" data-toggle="modal" data-target="#modalEdit">Edit</button>
                     </div>
                     <div>
                         <h3>{{$singlePost->strTitle}}</h3>
@@ -74,12 +70,12 @@
                         </div>
                         <div>
                             @if (!$userOnline->isLiking($singlePost->id))
-                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="true">LIKE</button>                                
+                                <button data-userID="{{$userOnline->id}}" data-postID="{{$singlePost->id}}" class="btn btn-info like" data-liked="true">LIKE</button>                                
                             @else
-                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-warning like" data-liked="false">LIKE</button>                                
+                                <button data-userID="{{$userOnline->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="false">LIKE</button>                                
                             @endif
                             <label class="like" id="{{$singlePost->id}}">Likes: <span>{{$singlePost->intLikes}}</span></label>
-                            <button id="comments-intPostID" type="button" data-idpublicacion="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
+                            <button id="comments-intPostID" type="button" data-postID="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
                         </div>
                     </div>
                 </div>
@@ -94,14 +90,13 @@
                             </button>
                             <h4 class="modal-title" id="myModalLabel">Comments</h4>
                             <div class="modal-body">
-                                <form method="post" action="comment" >                
-                                    <input type="hidden" name="idUsuario" value="intUserID">
-                                    <input type="hidden" name="idPublicacion" id="idPublicacionHidden">
-                                    <input type="hidden" name="action" value="createComment">
-                                    <input type="hidden" name="place" value="home">
+                                <form method="post" action="storeComment" class="postComent">    
+                                    {{ csrf_field() }}                
+                                    <input type="hidden" name="modalComentsUserID" id="modalComentsUserID" value="{{$userOnline->id}}">
+                                    <input type="hidden" name="modalComentsPostID" id="modalComentsPostID">
                                     <div class="form-group">
                                         <label for="contenidoComentario" style="display: block;">Comment: </label>
-                                        <textarea id="contenidoComentario" name="contenidoComentario" placeholder="New comment..." required></textarea>
+                                        <textarea id="contentComment" name="contenidoComentario" placeholder="New comment..." required></textarea>
                                     </div>
                                     <center>
                                         <button type="submit" class="btn btn-primary" align="center" id="publicarComentario">Post comment</button>
@@ -109,7 +104,8 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="contenedorComentarios">
+                            <!-- This is where all comments go -->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -132,6 +128,66 @@
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Delete post</h4>
+                        </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete this post?
+                                <input type="hidden" name="modalDeletePostID" id="modalDeletePostID">
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="deletePost" data-dismiss="modal">Delete</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Edit post</h4>
+                            <div class="modal-body">
+                                <form method="post" action="editPost" class="editPostForm">    
+                                    {{ csrf_field() }}                
+                                    <input type="hidden" name="modalEditPostID" id="modalEditPostID">
+                                    <div class="form-group">
+                                        <label for="tituloPublicacion" >Post title</label>
+                                        <input id="editPostTitle" name="editPostTitle" type="text" class="form-control" placeholder="Título" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contenidoPublicacion" style="display: block;">Post content</label>
+                                        <textarea id="editPostContent" name="editPostContent" placeholder="Content..." required></textarea>
+                                    </div>
+                                    <!--
+                                    <div class="form-group">
+                                        <input type="file" id="editPostMultimedia" name="editPostMultimedia" class="form-control hideInput" required>
+                                        <label for="editPostMultimedia" class="btn btn-default btnLeftPad">Multimedia</label>
+                                    </div>
+                                    -->
+                                    <center>
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </center>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-body">
                         </div>
                     </div>
                 </div>

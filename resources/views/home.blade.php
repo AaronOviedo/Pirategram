@@ -24,6 +24,10 @@
                     <div>
                         <img class="img-circle imgProfile" src="{{$singlePost->user->profile->strLink}}">
                         <a href="/myUser/{{$singlePost->user->id}}"><h4 style="display: inline-block; margin-left: 10px;">{{$singlePost->user->strName}}</h4></a>
+                        @if ($user->id == $singlePost->user->id)
+                            <button class="btn btn-danger pull-right" style="margin-left: 10px;"  data-postID="{{$singlePost->id}}" data-toggle="modal" data-target="#modalDelete">Delete</button>
+                            <button class="btn btn-warning pull-right" data-postID="{{$singlePost->id}}" data-toggle="modal" data-target="#modalEdit">Edit</button>
+                        @endif
                     </div>
                     <div>
                         <h3>{{$singlePost->strTitle}}</h3>
@@ -34,12 +38,12 @@
                         </div>
                         <div>
                             @if (!$user->isLiking($singlePost->id))
-                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="true">LIKE</button>                                
+                                <button data-userID="{{$user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-info like" data-liked="true">LIKE</button>                                
                             @else
-                                <button data-userID="{{$singlePost->user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-warning like" data-liked="false">LIKE</button>                                
+                                <button data-userID="{{$user->id}}" data-postID="{{$singlePost->id}}" class="btn btn-default like" data-liked="false">LIKE</button>                                
                             @endif
                             <label class="like" id="intPostID">Likes: <span>{{$singlePost->intLikes}} </span></label>
-                            <button id="comments-intPostID" type="button" data-postID="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
+                            <button type="button" data-postID="{{$singlePost->id}}" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>
                         </div>
                     </div>
                 </div>
@@ -55,12 +59,13 @@
                         </button>
                         <h4 class="modal-title" id="myModalLabel">Comments</h4>
                         <div class="modal-body">
-                            <form method="post" action="comment" >                
-                                <input type="hidden" name="idUsuario" value="{{$singlePost->user->id}}">
-                                <input type="hidden" name="idPublicacion" id="idPublicacionHidden">
+                            <form method="post" action="storeComment" class="postComent">
+                                {{ csrf_field() }}       
+                                <input type="hidden" name="modalComentsUserID" id="modalComentsUserID" value="{{$user->id}}">
+                                <input type="hidden" name="modalComentsPostID" id="modalComentsPostID">
                                 <div class="form-group">
                                     <label for="contenidoComentario" style="display: block;">Comment: </label>
-                                    <textarea style="width: 100%; height: 50px; border-radius: 5px;" id="contentComment" name="contenidoComentario" placeholder="New comment..." required></textarea>
+                                    <textarea id="contentComment" name="contentComment" placeholder="New comment..." required></textarea>
                                 </div>
                                 <center>
                                     <button type="submit" class="btn btn-primary" style="margin-top:0px;" align="center">Post comment</button>
@@ -69,6 +74,7 @@
                         </div>
                     </div>
                     <div class="modal-body" id="contenedorComentarios">
+                        <!-- This is where all comments go -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -91,6 +97,64 @@
                         </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Delete post</h4>
+                    </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this post?
+                            <input type="hidden" name="modalDeletePostID" id="modalDeletePostID">
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btnDelete" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Edit post</h4>
+                        <div class="modal-body">
+                            <form method="post" action="editPost" class="editPost" enctype="multipart/form-data">    
+                                {{ csrf_field() }}                
+                                <input type="hidden" name="modalEditPostID">
+                                <div class="form-group">
+                                    <label for="tituloPublicacion" >Post title</label>
+                                    <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Título" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contenidoPublicacion" style="display: block;">Post content</label>
+                                    <textarea id="postContent" name="postContent" placeholder="Content..." required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="file" id="postMultimedia" name="postMultimedia" class="form-control hideInput" required>
+                                    <label for="postMultimedia" class="btn btn-default btnLeftPad">Multimedia</label>
+                                </div>
+                                <center>
+                                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Edit</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                </center>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-body">
                     </div>
                 </div>
             </div>

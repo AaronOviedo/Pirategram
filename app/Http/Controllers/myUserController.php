@@ -82,7 +82,7 @@ class myUserController extends Controller
     {
         $myUser = myUser::find($id);
 
-        dd($myUser);
+        //dd($myUser);
         return redirect('profile')->with('userProfile', $myUser);
     }
 
@@ -149,7 +149,7 @@ class myUserController extends Controller
 
             $user->intProfile = $newMultimedia->id;
             $user->save();
-            return 'reload';
+            return $newMultimedia->strLink;
         }else{
             return response()->json([
                 'message'       =>  $Validator->errors()->all()
@@ -175,7 +175,7 @@ class myUserController extends Controller
 
             $user->intCover = $newMultimedia->id;
             $user->save();
-            return 'reload';
+            return $newMultimedia->strLink;
         }else{
             return response()->json([
                 'message'       =>  $Validator->errors()->all()

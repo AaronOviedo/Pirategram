@@ -107,7 +107,7 @@ img.PP{
     height: 50px; 
     display: inline-block;
 }
-p.like{
+label.like{
     display: inline-block; 
     color: #337ab7; 
     vertical-align: bottom; 
@@ -236,4 +236,28 @@ main{
     text-align: left;
     font-size: 10px;
     font-style: normal;
+}
+
+.coverDiv{
+    padding-left: 10px;  
+    width: 92.5%; 
+    margin: 20px auto;
+    background-repeat: no-repeat;
+    background-size: 100% 100%; 
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.vistaComentario{
+    margin-top: 15px;
+    background-color: #e3e7fd;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.vistaComentario>div{
+    margin-left: 10px;
+    padding: 5px;
+    font-style: normal;
+    font-size: 20px;
 }

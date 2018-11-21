@@ -122,4 +122,54 @@ class PublicationController extends Controller
     {
         //
     }
+
+    public function fetchComments(Request $request){
+        $allComments = Coment::where('intPostID', $request->postID)->get();
+        $arrayComents = array();
+        foreach($allComments as $singleComent){
+            $tempArray = array();
+            $tempArray['userID'] = $singleComent->user->id;
+            $tempArray['userName'] = $singleComent->user->strName;
+            $tempArray['userPhoto'] = $singleComent->user->profile->strLink;
+            $tempArray['coment'] = $singleComent->strComent;
+            array_push($arrayComents, $tempArray);
+        }
+
+        return $arrayComents;
+    }
+
+    public function storeComment(Request $request){
+        $newComent = Coment::create([
+            'strComent'    =>  $request->contentComment,
+            'intUserID'     =>  $request->modalComentsUserID,
+            'intPostID'     =>  $request->modalComentsPostID
+        ]);
+
+        $user = myUser::find($request->modalComentsUserID);
+        $newComent['userPhoto'] = $user->profile->strLink;
+        $newComent['userName'] = $user->strName;
+
+        return $newComent;
+    }
+
+    public function deletePost(Request $request){
+        $post = Post::find($request->postID);
+        Storage::disk('public')->delete($post->multimedia->strLink);
+        $post->delete();
+        return['message' => 'success'];
+    }
+
+    public function editPost(Request $request){
+        $editPost = Post::find($request->modalEditPostID);
+        $editPost->strTitle = $request->editPostTitle;
+        $editPost->strDescription = $request->editPostContent;
+        $editPost->save();
+
+        return['message' => 'success'];
+    }
+
+    public function editPostValues(Request $request){
+        $postFinded = Post::find($request->postID);
+        return $postFinded;
+    }
 }

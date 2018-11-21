@@ -13,7 +13,7 @@ class CreateComentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('catComents', function (Blueprint $table) {
+        Schema::create('catComent', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('strComent');

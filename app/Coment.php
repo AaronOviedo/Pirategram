@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coment extends Model
 {
+    protected $fillable = ['strComent', 'intUserID', 'intPostID'];
+
     protected $table = 'catComent';
 
     public function post(){

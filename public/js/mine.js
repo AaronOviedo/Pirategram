@@ -53,7 +53,20 @@ $(document).ready(function(){
                 }else{
                     console.log(data);
                     $('#newPostModal').modal('toggle');
-                    $('.postContainer').prepend('<div class="well divPost"><div><img  class="img-circle imgProfile" src="' + data.strUserProfile +'"><a href="/myUser/{ {{'+ data.intUserID +'}} }"><h4 style="display: inline-block; margin-left: 10px;">'+ data.strUserName +'</h4></a></div><div><h3>'+ data.strTitle +'</h3><h4>'+ data.strDescription +'</h4><div><img data-toggle="modal" data-target="#modalImg" class="imgGaleria imgWidth" src="'+ data.strPostLink +'"></div><div><button data-idusuario="'+ data.intUserID +'" data-idpublicacion="'+ data.id +'"class="btn btn-default like" data-liked="true" >LIKE</button><p class="like" id="'+ data.id +'">Likes '+ data.intLikes +'</p><button id="comments-intPostID" type="button" data-idpublicacion="'+ data.id +'" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button></div></div></div>');
+                    $('.postContainer').prepend(
+                        '<div class="well divPost"><div>'+
+                        '<img  class="img-circle imgProfile" src="' + data.strUserProfile +'">'+
+                        '<a href="/myUser/{ {{'+ data.intUserID +'}} }">'+
+                        '<button class="btn btn-danger pull-right" style="margin-left: 10px;"  data-postID="'+ data.id +'" data-toggle="modal" data-target="#modalDelete">Delete</button>' +
+                        '<button class="btn btn-warning pull-right" data-postID="'+ data.id +'" data-toggle="modal" data-target="#modalEdit">Edit</button> '+
+                        '<h4 style="display: inline-block; margin-left: 10px;">'+ data.strUserName +'</h4></a></div>'+
+                        '<div><h3>'+ data.strTitle +'</h3><h4>'+ data.strDescription +'</h4><div>'+
+                        '<img data-toggle="modal" data-target="#modalImg" class="imgGaleria imgWidth" src="'+ data.strPostLink +'"></div>'+
+                        '<div><button data-idusuario="'+ data.intUserID +'" data-idpublicacion="'+ data.id +'"class="btn btn-default like" data-liked="true" >'+
+                        'LIKE</button><label class="like" id="intPostID">Likes <span>'+ data.intLikes +'</span></label>'+
+                        '<button id="comments-intPostID" type="button" data-idpublicacion="'+ data.id +'" class="btn btn-default comments pull-right" data-toggle="modal" data-target="#modalComments">New comment</button>'+
+                        '</div></div></div>'
+                        );
                 }
             },
             error: function(){
@@ -86,7 +99,8 @@ $(document).ready(function(){
                     alert(data.message);
                 }else{
                     console.log(data);
-                    location.reload();
+                    //location.reload();
+                    $('.img-circle').attr('src', data);
                 }
             },
             error: function(){
@@ -113,8 +127,9 @@ $(document).ready(function(){
                 if(data.message){
                     alert(data.message);
                 }else{
-                    console.log(data);
+                    //console.log(data);
                     location.reload();
+                    //$('.coverDiv').css('background-image', data);
                 }
             },
             error: function(){
@@ -320,11 +335,16 @@ $(document).ready(function(){
                 },
                 success: function(e){
                     console.log(e.status);
-                    btnLike.attr('data-liked', 'false');
-                    btnLike.removeClass('btn-default');
-                    btnLike.addClass('btn-warning');
-                    
-                    $('label.like span').empty().append(e.intLikes);
+                    if(e.status == 'failed'){
+                        alert('There was an error, please try again');
+                    }else{
+                        console.log(e);
+                        btnLike.attr('data-liked', 'false');
+                        btnLike.removeClass('btn-info');
+                        btnLike.addClass('btn-default');
+                        
+                        $('label.like span').empty().append(e.intLikes);
+                    }
                 }
             });
         }else if (btnLike.attr('data-liked') == 'false'){
@@ -337,14 +357,143 @@ $(document).ready(function(){
                 },
                 success: function(e){
                     console.log(e.status);
-                    btnLike.attr('data-liked', 'true');
-                    btnLike.removeClass('btn-warning');
-                    btnLike.addClass('btn-default');
+                    if(e.status == 'failed'){
+                        alert('There was an error, please try again');
+                    }else{
+                        btnLike.attr('data-liked', 'true');
+                        btnLike.removeClass('btn-default');
+                        btnLike.addClass('btn-info');
 
-                    $('label.like span').empty();
-                    $('label.like span').append(e.intLikes);
+                        $('label.like span').empty();
+                        $('label.like span').append(e.intLikes);
+                    }
                 }
             });
         }
+    });
+
+    $('button.comments').click(function (){
+        var post = $(this).attr('data-postID');
+        $('#modalComentsPostID').val(post);
+        $.ajax({
+            method: 'get',
+            url: 'fetchComments',
+            data:{
+                postID: post
+            },
+            success: function(e){
+                console.log(e);
+                $('#contenedorComentarios').empty();
+                for(key in e){
+                    if(!e.hasOwnProperty(key)) continue;
+                    
+                    var data = e[key];
+                    $('#contenedorComentarios').prepend(
+                        '<div class="vistaComentario">' +
+                        '<div>' +
+                        '<img class="img-circle imgProfile" src="'+ data.userPhoto +'">' +
+                        '<a href="/myUser/'+ data.userID +'"><h4 style="display: inline-block; margin-left: 10px;">'+ data.userName +'</h4></a>' +
+                        '</div>' +
+                        '<div class="vistaComentario">' +
+                        data.coment +
+                        '</div></div>'
+                    );
+                }
+            }
+        });
+    });
+
+    $('.postComent').submit(function (e){
+        e.preventDefault();
+        var formAction = $(this).attr("action");
+
+        $.ajax({
+            method: 'post',
+            url: formAction,
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data){
+                $('#contenedorComentarios').prepend(
+                    '<div class="vistaComentario">' +
+                    '<div>' +
+                    '<img class="img-circle imgProfile" src="'+ data.userPhoto +'">' +
+                    '<a href="/myUser/'+ data.intUserID +'"><h4 style="display: inline-block; margin-left: 10px;">'+ data.userName +'</h4></a>' +
+                    '</div>' +
+                    '<div>' +
+                    data.strComent +
+                    '</div></div>'
+                );
+            }
+        });
+    });
+
+    //Delete code
+    $('button.btn-danger.pull-right').click(function(){
+        var postID = $(this).attr('data-postID');
+        $('#modalDeletePostID').val(postID);
+    });
+    $('#deletePost').click(function(){
+        var postid = $('#modalDeletePostID').val();
+        $.ajax({
+            method: 'post',
+            url: 'deletePost',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{
+                postID: postid
+            },
+            success: function(data){
+                if(data.message == 'success'){
+                    location.reload();
+                }else{
+                    alert('There was an error, please try again');
+                }
+            }
+        });
+    });
+
+    //Edit code
+    $('button.btn-warning.pull-right').click(function(){
+        var post = $(this).attr('data-postID');
+        $('#modalEditPostID').val(post);
+
+        $.ajax({
+            method: 'get',
+            url: 'editPostValues',
+            data: {
+                postID: post
+            },
+            success: function(data){
+                if(data.message == 'failure'){
+                    alert('There was an error, please try again');
+                }else{
+                    $('#editPostTitle').val(data.strTitle);
+                    $('#editPostContent').val(data.strDescription);
+                }
+            }
+        });
+    });
+    $('.editPostForm').submit(function(e){
+        e.preventDefault();
+        var formAction = $(this).attr("action");
+        console.log('Hello');
+
+        $.ajax({
+            method: 'post',
+            url: formAction,
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data){
+                console.log(data);
+                if(data.message == 'failure'){
+                    alert('There was an error, please try again');
+                }else{
+                    location.reload();
+                }
+            }
+        });
     });
 });
