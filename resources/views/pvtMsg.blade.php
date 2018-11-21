@@ -20,14 +20,14 @@
     </div>
     </center>
     <div class="chatMessages chat">
-        <!-- Take all the messages with AJAX 
-        <div class="messageSend">
-            Hello
+        <div class="chatMessagesSend">
+            <!-- Div for messages sended -->
         </div>
-        <div class="messageReceived">
-            Hi!
-        </div> -->
-    </div>
+        <div class="chatMessagesReceive">
+            <!-- Div for messages Received -->
+        </div>
+        <!-- Take all the messages with AJAX -->
+    </div>>
     <div class="chatWriteMessage chat">
         <form action="/sendMessage" method="post">
             {{ csrf_field() }}
@@ -36,5 +36,6 @@
             <input type="text" name="chatMsg" id="chatMsg" class="form-control" placeholder="Write your message..." required>
             <button type="submit" id="chatSubmit" class="btn btn-primary">Send</button>
         </form>
+        <button id="btnReloadMessages" class="btn btn-default">Reload Messages</button>
     </div>
 @endsection

@@ -187,7 +187,7 @@ class myUserController extends Controller
         $allUsers = myUser::all();
         $array = array();
         foreach($allUsers as $singleUser){
-            if($singleUser != $request->id){
+            if($singleUser->id != $request->id){
                 $tempArray = array();
                 $tempArray['userID'] = $singleUser->id;
                 $tempArray['userName'] = $singleUser->strName;
@@ -261,15 +261,40 @@ class myUserController extends Controller
 
     public function sendMessage(Request $request){
         //$user = myUser::find($request->sendID);
+        if($request->sendID == $request->receiveID){
+            return ['message' => 'Click another person to chat'];
+        }
+
         $message = PvtMsg::create([ 
             'intReceive'        => $request->receiverID,
             'intSend'           => $request->sendID,
             'strMessage'        => $request->chatMsg
         ]);
 
-        event(new Msg('This is a new message'));
+        //event(new Msg('This is a new message'));
 
-        return ['status' => 'Message sent'];
-        //return $message;
+        //return ['status' => 'Message sent'];
+        return $message;
+    }
+
+    public function fetchMessages(Request $request){
+        if($request->sendID == $request->receiveID){
+            return ['message' => 'Click another person to chat'];
+        }
+        $allMessagesSend = PvtMsg::where('intSend', '=', $request->sendID)
+                                    ->where('intReceive', '=', $request->receiveID)
+                                    ->orderBy('created_at')
+                                    ->get();
+
+        $allMessagesReceive = PvtMsg::where('intSend', '=', $request->receiveID)
+                                    ->where('intReceive', '=', $request->sendID)
+                                    ->get();
+
+        $tempArray = array();
+        $tempArray['sendMessages'] = $allMessagesSend;
+        $tempArray['receiveMessages'] = $allMessagesReceive;
+        
+        return $tempArray;
+        //return $allMessagesReceive;
     }
 }

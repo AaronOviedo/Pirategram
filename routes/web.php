@@ -24,6 +24,7 @@ Route::get('unlike', 'myUserController@unlike');
 Route::get('follow', 'myUserController@follow');
 Route::get('unfollow', 'myUserController@unfollow');
 Route::post('sendMessage', 'myUserController@sendMessage');
+Route::post('fetchMessages', 'myUserController@fetchMessages');
 
 //Restful routes
 Route::resource('myUser', 'myUserController');

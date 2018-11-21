@@ -33,12 +33,6 @@ $(document).ready(function(){
         $("#usersFollowing").show();
     });
 
-    //Pusher.logToConsole = true;
-
-    Echo.channel('privateMsg').listen('Msg', (e) => {
-        console.log('Helloooo' + e.message);
-    });
-
     // ALL AJAX FUNCTIONS
     $("#formNewPost").submit(function(e){
         e.preventDefault();
@@ -135,9 +129,6 @@ $(document).ready(function(){
             url: 'usersChat',
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data: {id : $('meta[name="userID"]').attr('content')},
-            contentType: false,
-            cache: false,
-            processData: false,
             success: function(data){
                 //console.log(message);
                 for(var user in data){
@@ -166,12 +157,116 @@ $(document).ready(function(){
             processData: false,
             success: function(data){
                 console.log(data);
+                if(data.hasOwnProperty('message')){
+                    $('.chatMessagesSend').append(
+                        '<div class="messageSend">' +
+                        data.message +
+                        '</div>' +
+                        '<div class="labelSend">' + data.created_at + '</div>'
+                        );
+                    
+                    $('.chatMessagesReceive').append(
+                        '<div class="messageReceive">' +
+                        data.message +
+                        '</div>'
+                        );
+                }else{
+                    $('.chatMessagesSend').append(
+                        '<div class="messageSend">' +
+                        data.strMessage +
+                        '</div>' +
+                        '<div class="labelSend">' + data.created_at + '</div>'
+                        );
+                    $('.chat input').val('');
+                }
             },
             error: function(){
                 console.log('Error');
             }
         });
     });
+
+    $('.chatMessages').ready(fetchMessages());
+    $('#btnReloadMessages').click(function(){
+        fetchMessages();
+    });
+
+
+    function fetchMessages(){
+        var divSend = $('.chatMessagesSend');
+        var divReceive = $('.chatMessagesReceive');
+        $.ajax({
+            method: 'post',
+            url: 'fetchMessages',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                sendID:     $('#sendID').val(),
+                receiveID:  $('#receiverID').val()
+            },
+            success: function(data){
+                console.log(data);
+                divSend.empty();
+                divReceive.empty();
+                var contador = 0;
+
+                if(data.hasOwnProperty('message')){
+                    $('.chatMessagesSend').append(
+                        '<div class="messageSend">' +
+                        data.message +
+                        '</div>' +
+                        '<div class="labelSend">' + data.created_at + '</div>' +
+
+                        '<div class="messageSend">' +
+                        data.message +
+                        '</div>' +
+                        '<div class="labelSend">' + 'Time created' + '</div>' 
+                        );
+                    
+                    $('.chatMessagesReceive').append(
+                        '<div class="messageReceived">' +
+                        data.message +
+                        '</div>' +
+                        '<div class="labelReceived">' + 'Time created' + '</div>' +
+
+                        '<div class="messageReceived">' +
+                        data.message +
+                        '</div>' +
+                        '<div class="labelReceived">' + 'Time created' + '</div>'
+                        );
+                }else{
+                    for(key in data){
+                        if(!data.hasOwnProperty(key)) continue;
+                        
+                        console.log(data[key]);
+                        var obj = data[key];
+                        if(data.hasOwnProperty('sendMessages') && contador == 0){
+                            for(key in obj){
+                                $('.chatMessagesSend').append(
+                                    '<div class="messageSend">' +
+                                        obj[key].strMessage +
+                                    '</div>' +
+                                    '<div class="labelSend">' + obj[key].created_at + '</div>'
+                                );
+                            }
+                            contador+= 1;
+                        }else if(data.hasOwnProperty('receiveMessages') && contador == 1){
+                            for(key in obj){
+                                $('.chatMessagesReceive').append(
+                                    '<div class="messageReceived">' +
+                                        obj[key].strMessage +
+                                    '</div>' +
+                                    '<div class="labelReceived">' + obj[key].created_at + '</div>'
+                                );
+                            }
+                        }
+                    }
+                }
+            },
+            error: function(){
+                console.log('Error');
+            }
+        });
+    }
 
     //AJAX for follow
     $('button.follow').click( function(){

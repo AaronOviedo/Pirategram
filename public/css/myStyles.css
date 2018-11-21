@@ -169,16 +169,37 @@ main{
 #chatSubmit{
     float: right;
     margin-top: 5px;
+    margin-left: 10px;
     padding-left: 20px;
     padding-right: 20px;
 }
+#btnReloadMessages{
+    float: right;
+    margin-top: 5px;
+}
 .chat input{
-    width: 90%;
+    width: 70%;
 }
 .chatMessages{
+    max-height: 500px;
     min-height: 500px;
 }
+.chatMessagesSend{
+    width: 50%;
+    min-height: 500px;
+    max-height: 500px;
+    float: right;
+    overflow-y: scroll;
+}
+.chatMessagesReceive{
+    width: 50%;
+    min-height: 500px;
+    max-height: 500px;
+    float: left;
+    overflow-y: scroll;
+}
 .messageReceived{
+    margin-top: 15px;
     clear: both;
     display: block;
     float: left;
@@ -189,6 +210,7 @@ main{
 }
 
 .messageSend{
+    margin-top: 15px;
     clear: both;
     display: block;
     float: right;
@@ -196,4 +218,22 @@ main{
     background-color: lightblue;
     padding: 10px;
     margin-right: 15px;
+}
+
+.labelSend{
+    clear: both;
+    display: block;
+    float: right;
+    text-align: right;
+    font-size: 10px;
+    font-style: normal;
+}
+
+.labelReceived{
+    clear: both;
+    display: block;
+    float: left;
+    text-align: left;
+    font-size: 10px;
+    font-style: normal;
 }
